@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  --background: #030712;
+  --foreground: #f3f4f6;
+  
+  --brand-bg: #030712;
+  --brand-surface: #0B1117;
+  --brand-primary: #38BDF8;
+  --brand-secondary: #818CF8;
+  --brand-border: #1F2937;
+}
+
+@theme {
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-border: var(--brand-border);
+}
+
+body {
+  background-color: var(--brand-bg);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui;
+}
+
+/* Glassmorphism panel styling */
+.glass-panel {
+  background: rgba(11, 17, 23, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--brand-border);
+}
+
+/* Electric cyan glow */
+.cyan-glow {
+  transition: all 0.2s ease-in-out;
+}
+.cyan-glow:focus, .cyan-glow:hover {
+  outline: none;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  border-color: var(--brand-primary);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+::-webkit-scrollbar-thumb {
+  background: #1F2937;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #38BDF8;
+}
