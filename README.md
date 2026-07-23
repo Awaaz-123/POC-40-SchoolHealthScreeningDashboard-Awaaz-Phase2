@@ -1,4 +1,4 @@
-# POC-40-SchoolHealthScreening-Awaaz
+# POC-40-SchoolHealthScreeningDashboard-Awaaz
 
 School Health Screening Dashboard is a high-performance healthcare intelligence platform built as part of the **Real Rails Intelligence Library (PoC #40)**. It maps student vision, hearing, dental, and BMI screening coverage across Gulf school systems (UAE and Saudi Arabia) and tracks the referral-to-treatment follow-up loop.
 
