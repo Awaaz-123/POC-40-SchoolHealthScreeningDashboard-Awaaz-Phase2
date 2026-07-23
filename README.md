@@ -82,13 +82,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --host 127.0.0.1 --port 8082
 ```
-*API Swagger docs will be available at:* `http://127.0.0.1:8082/docs`
+*API Swagger docs will be available at:* `http://127.0.0.1:808/docs`
 
 ### 2. Start the Next.js Frontend
 ```bash
 cd frontend
 npm install
-npm run dev -- -p 3002
+npm run dev -- -p 3001
 ```
 *The Dashboard UI will be available at:* `http://localhost:3002`
 

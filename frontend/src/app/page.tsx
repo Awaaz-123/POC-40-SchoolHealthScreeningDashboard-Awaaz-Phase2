@@ -239,9 +239,138 @@ export default function Home() {
     <div className="flex h-screen w-screen overflow-hidden bg-brand-bg text-gray-200 font-sans">
       
       {/* ========================================================================= */}
+      {/* 70% MAIN STAGE: Completion Gauges, Referral Funnel, Flag Bars & Rankings */}
+      {/* ========================================================================= */}
+      <main className="w-[70%] h-full flex flex-col p-6 gap-5 overflow-hidden">
+        
+        {/* Top Section: Regional Screening Gauges */}
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xs font-bold tracking-wider text-white uppercase font-mono flex items-center gap-1.5">
+              <Award className="w-4 h-4 text-brand-primary" /> Regional Screening-Coverage Completion Gauges
+            </h2>
+            <span className="text-[10px] font-mono text-gray-500">WHO & Gulf MOE Benchmarks</span>
+          </div>
+
+          <div className="grid grid-cols-6 gap-3">
+            {regions.map((reg) => {
+              const isSelected = selectedRegion === reg.region;
+              return (
+                <div
+                  key={reg.region}
+                  onClick={() => setSelectedRegion(isSelected ? null : reg.region)}
+                  className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 flex flex-col justify-between ${
+                    isSelected
+                      ? 'bg-brand-primary/10 border-brand-primary shadow-[0_0_12px_rgba(56,189,248,0.25)]'
+                      : 'bg-brand-surface/60 border-brand-border hover:border-gray-600'
+                  }`}
+                >
+                  <div className="text-[10px] font-mono text-gray-400 font-bold truncate">{reg.region}</div>
+                  <div className="text-xl font-black font-mono text-white mt-1">
+                    {reg.completion_rate}%
+                  </div>
+                  <div className="w-full h-1.5 bg-brand-bg rounded-full overflow-hidden mt-2 border border-brand-border">
+                    <div
+                      className={`h-full ${reg.completion_rate >= 90 ? 'bg-emerald-500' : 'bg-brand-primary'}`}
+                      style={{ width: `${reg.completion_rate}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Middle Section: Referral Funnel (Left) + BMI Trends & Flag-Rates (Right) */}
+        <div className="h-[42%] w-full flex gap-5 overflow-hidden">
+          
+          {/* Referral-to-Treatment Funnel */}
+          <div className="w-1/2 h-full bg-brand-surface/30 border border-brand-border rounded-lg p-4 flex flex-col">
+            <div className="flex items-center justify-between mb-2 border-b border-brand-border pb-2">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <Stethoscope className="w-4 h-4 text-brand-primary" /> Referral-to-Treatment Funnel
+              </h3>
+              <span className="text-[9px] font-mono text-gray-400">Identification → Clinical Care</span>
+            </div>
+
+            <div className="flex-1 w-full text-[10px] font-mono">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={summaryData?.funnel_stages || MOCK_FUNNEL} layout="vertical" margin={{ left: 10, right: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" opacity={0.4} />
+                  <XAxis type="number" stroke="#9CA3AF" />
+                  <YAxis dataKey="stage" type="category" stroke="#9CA3AF" width={110} />
+                  <ChartTooltip
+                    contentStyle={{ backgroundColor: '#0B1117', borderColor: '#1F2937' }}
+                    itemStyle={{ color: '#f3f4f6' }}
+                    formatter={(value: unknown) => [`${Number(value).toLocaleString()} students`, 'Volume']}
+                  />
+                  <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                    {(summaryData?.funnel_stages || MOCK_FUNNEL).map((entry, index) => (
+                      <Cell key={`funnel-cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Vision/Hearing Flag Rates by Grade */}
+          <div className="w-1/2 h-full bg-brand-surface/30 border border-brand-border rounded-lg p-4 flex flex-col">
+            <div className="flex items-center justify-between mb-2 border-b border-brand-border pb-2">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <TrendingUp className="w-4 h-4 text-brand-secondary" /> Vision vs Dental Flag-Rate by Grade
+              </h3>
+              <span className="text-[9px] font-mono text-gray-400">% Identified</span>
+            </div>
+
+            <div className="flex-1 w-full text-[10px] font-mono">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={flagRates}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" opacity={0.4} />
+                  <XAxis dataKey="grade" stroke="#9CA3AF" />
+                  <YAxis stroke="#9CA3AF" />
+                  <ChartTooltip
+                    contentStyle={{ backgroundColor: '#0B1117', borderColor: '#1F2937' }}
+                    itemStyle={{ color: '#f3f4f6' }}
+                  />
+                  <Legend verticalAlign="top" height={24} />
+                  <Bar dataKey="vision_flag" name="Vision Flag %" fill="#38BDF8" radius={[2, 2, 0, 0]} />
+                  <Bar dataKey="dental_flag" name="Dental Flag %" fill="#818CF8" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Bottom Section: TanStack School Ranking Table */}
+        <div className="flex-1 w-full bg-brand-surface/20 border border-brand-border rounded-lg p-4 flex flex-col overflow-hidden">
+          <div className="flex items-center justify-between mb-2 pb-2 border-b border-brand-border">
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <Activity className="w-4 h-4 text-brand-primary" /> School-Level Screening Completion & Follow-up Rankings
+            </h3>
+            <span className="text-[9px] font-mono text-gray-400">Interactive Sorting & Filtering</span>
+          </div>
+
+          <div className="flex-1 overflow-hidden">
+            {loading ? (
+              <div className="w-full h-full flex flex-col items-center justify-center bg-brand-surface/40">
+                <RefreshCw className="w-8 h-8 text-brand-primary animate-spin mb-2" />
+                <span className="text-sm font-mono text-gray-400">Loading School Performance Data...</span>
+              </div>
+            ) : (
+              <SchoolRankingTable data={filteredSchoolRankings} />
+            )}
+          </div>
+        </div>
+
+      </main>
+
+      {/* ========================================================================= */}
       {/* 30% SIDEBAR: High Level Metrics, Context, Filters & Exporter */}
       {/* ========================================================================= */}
-      <aside className="w-[30%] h-full flex flex-col border-r border-brand-border bg-brand-surface/40 backdrop-blur-md p-6 overflow-y-auto z-20">
+      <aside className="w-[30%] h-full flex flex-col border-l border-brand-border bg-brand-surface/40 backdrop-blur-md p-6 overflow-y-auto z-20">
         
         {/* Header Title */}
         <div className="mb-6">
@@ -384,135 +513,6 @@ export default function Home() {
         </div>
 
       </aside>
-
-      {/* ========================================================================= */}
-      {/* 70% MAIN STAGE: Completion Gauges, Referral Funnel, Flag Bars & Rankings */}
-      {/* ========================================================================= */}
-      <main className="w-[70%] h-full flex flex-col p-6 gap-5 overflow-hidden">
-        
-        {/* Top Section: Regional Screening Gauges */}
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xs font-bold tracking-wider text-white uppercase font-mono flex items-center gap-1.5">
-              <Award className="w-4 h-4 text-brand-primary" /> Regional Screening-Coverage Completion Gauges
-            </h2>
-            <span className="text-[10px] font-mono text-gray-500">WHO & Gulf MOE Benchmarks</span>
-          </div>
-
-          <div className="grid grid-cols-6 gap-3">
-            {regions.map((reg) => {
-              const isSelected = selectedRegion === reg.region;
-              return (
-                <div
-                  key={reg.region}
-                  onClick={() => setSelectedRegion(isSelected ? null : reg.region)}
-                  className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 flex flex-col justify-between ${
-                    isSelected
-                      ? 'bg-brand-primary/10 border-brand-primary shadow-[0_0_12px_rgba(56,189,248,0.25)]'
-                      : 'bg-brand-surface/60 border-brand-border hover:border-gray-600'
-                  }`}
-                >
-                  <div className="text-[10px] font-mono text-gray-400 font-bold truncate">{reg.region}</div>
-                  <div className="text-xl font-black font-mono text-white mt-1">
-                    {reg.completion_rate}%
-                  </div>
-                  <div className="w-full h-1.5 bg-brand-bg rounded-full overflow-hidden mt-2 border border-brand-border">
-                    <div
-                      className={`h-full ${reg.completion_rate >= 90 ? 'bg-emerald-500' : 'bg-brand-primary'}`}
-                      style={{ width: `${reg.completion_rate}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Middle Section: Referral Funnel (Left) + BMI Trends & Flag-Rates (Right) */}
-        <div className="h-[42%] w-full flex gap-5 overflow-hidden">
-          
-          {/* Referral-to-Treatment Funnel */}
-          <div className="w-1/2 h-full bg-brand-surface/30 border border-brand-border rounded-lg p-4 flex flex-col">
-            <div className="flex items-center justify-between mb-2 border-b border-brand-border pb-2">
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
-                <Stethoscope className="w-4 h-4 text-brand-primary" /> Referral-to-Treatment Funnel
-              </h3>
-              <span className="text-[9px] font-mono text-gray-400">Identification → Clinical Care</span>
-            </div>
-
-            <div className="flex-1 w-full text-[10px] font-mono">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={summaryData?.funnel_stages || MOCK_FUNNEL} layout="vertical" margin={{ left: 10, right: 20 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" opacity={0.4} />
-                  <XAxis type="number" stroke="#9CA3AF" />
-                  <YAxis dataKey="stage" type="category" stroke="#9CA3AF" width={110} />
-                  <ChartTooltip
-                    contentStyle={{ backgroundColor: '#0B1117', borderColor: '#1F2937' }}
-                    itemStyle={{ color: '#f3f4f6' }}
-                    formatter={(value: unknown) => [`${Number(value).toLocaleString()} students`, 'Volume']}
-                  />
-                  <Bar dataKey="count" radius={[0, 4, 4, 0]}>
-                    {(summaryData?.funnel_stages || MOCK_FUNNEL).map((entry, index) => (
-                      <Cell key={`funnel-cell-${index}`} fill={entry.fill} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Vision/Hearing Flag Rates by Grade */}
-          <div className="w-1/2 h-full bg-brand-surface/30 border border-brand-border rounded-lg p-4 flex flex-col">
-            <div className="flex items-center justify-between mb-2 border-b border-brand-border pb-2">
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
-                <TrendingUp className="w-4 h-4 text-brand-secondary" /> Vision vs Dental Flag-Rate by Grade
-              </h3>
-              <span className="text-[9px] font-mono text-gray-400">% Identified</span>
-            </div>
-
-            <div className="flex-1 w-full text-[10px] font-mono">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={flagRates}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" opacity={0.4} />
-                  <XAxis dataKey="grade" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
-                  <ChartTooltip
-                    contentStyle={{ backgroundColor: '#0B1117', borderColor: '#1F2937' }}
-                    itemStyle={{ color: '#f3f4f6' }}
-                  />
-                  <Legend verticalAlign="top" height={24} />
-                  <Bar dataKey="vision_flag" name="Vision Flag %" fill="#38BDF8" radius={[2, 2, 0, 0]} />
-                  <Bar dataKey="dental_flag" name="Dental Flag %" fill="#818CF8" radius={[2, 2, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* Bottom Section: TanStack School Ranking Table */}
-        <div className="flex-1 w-full bg-brand-surface/20 border border-brand-border rounded-lg p-4 flex flex-col overflow-hidden">
-          <div className="flex items-center justify-between mb-2 pb-2 border-b border-brand-border">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
-              <Activity className="w-4 h-4 text-brand-primary" /> School-Level Screening Completion & Follow-up Rankings
-            </h3>
-            <span className="text-[9px] font-mono text-gray-400">Interactive Sorting & Filtering</span>
-          </div>
-
-          <div className="flex-1 overflow-hidden">
-            {loading ? (
-              <div className="w-full h-full flex flex-col items-center justify-center bg-brand-surface/40">
-                <RefreshCw className="w-8 h-8 text-brand-primary animate-spin mb-2" />
-                <span className="text-sm font-mono text-gray-400">Loading School Performance Data...</span>
-              </div>
-            ) : (
-              <SchoolRankingTable data={filteredSchoolRankings} />
-            )}
-          </div>
-        </div>
-
-      </main>
 
     </div>
   );

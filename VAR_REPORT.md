@@ -15,7 +15,7 @@
 | **Obsidian Theme** | Background strictly `#030712` | Root body background and container CSS variables configured to strictly `#030712` | **PASS** |
 | **Card Surfaces** | Card surfaces strictly `#0B1117` | Card panels, gauges, and table backgrounds set to `--color-brand-surface: #0B1117` | **PASS** |
 | **Borders** | Borders strictly `#1F2937`, 1px width | Container borders use `border-brand-border` (`#1F2937`) | **PASS** |
-| **Layout Split** | Strictly 70% Main Stage / 30% Sidebar | 2-Column Split enforced: `w-[70%]` Main Stage and `w-[30%]` Sidebar | **PASS** |
+| **Layout Split** | Strictly 70% Main Stage / 30% Sidebar (Right-side) | 2-Column Split enforced: `w-[70%]` Main Stage on the left and `w-[30%]` Intelligence Sidebar on the right (`border-l`) | **PASS** |
 | **Accent Primary** | `#38BDF8` (Electric Cyan) for active states | Interactive gauges, selected regional cards, table headers, and active buttons use `#38BDF8` | **PASS** |
 | **Accent Secondary** | `#818CF8` (Indigo) for secondary metrics | Secondary chart series, flag-rate bars, and density slider tracks use `#818CF8` | **PASS** |
 | **Typography** | Inter / Geist font with tight spacing | Root Next.js layout configures `Geist` and `Geist Mono` font variables with tracking-tight classes | **PASS** |
