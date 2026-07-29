@@ -433,14 +433,14 @@ export default function Home() {
       {/* Dark Backdrop Overlay */}
       {sidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] transition-opacity duration-300"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Slide-Over Drawer */}
       <aside 
-        className={`fixed top-0 right-0 w-[440px] max-w-full h-full bg-brand-surface/95 border-l border-brand-border backdrop-blur-xl z-50 p-6 flex flex-col overflow-y-auto shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 w-[440px] max-w-full h-full bg-brand-surface/95 border-l border-brand-border backdrop-blur-xl z-[10000] p-6 flex flex-col overflow-y-auto shadow-2xl transition-transform duration-300 ease-in-out ${
           sidebarOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
