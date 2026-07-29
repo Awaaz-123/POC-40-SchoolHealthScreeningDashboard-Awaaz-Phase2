@@ -12,7 +12,10 @@ import {
   Stethoscope,
   TrendingUp,
   Award,
-  Filter
+  Filter,
+  Sparkles,
+  X,
+  User
 } from 'lucide-react';
 import {
   BarChart,
@@ -64,14 +67,6 @@ interface FlagRateRecord {
   bmi_flag: number;
 }
 
-interface BmiTrendRecord {
-  age: number;
-  underweight: number;
-  normal: number;
-  overweight: number;
-  obese: number;
-}
-
 // Fallback datasets for offline mode
 const MOCK_REGIONS: RegionSummary[] = [
   { region: "Dubai", country: "UAE", total_schools: 220, target_students: 310000, screened_students: 288300, completion_rate: 93.0, why_it_matters: "High-density private and public school network with mandated annual screening; tracking follow-through ensures early detection of refractive vision errors and childhood caries before academic performance suffers.", power_dynamics: "Joint oversight between Dubai Health Authority (DHA) and Knowledge and Human Development Authority (KHDA) requires aligned protocols between health regulators and private school operators." },
@@ -105,21 +100,6 @@ const MOCK_FLAG_RATES: FlagRateRecord[] = [
   { grade: "Grade 12", age: 17, vision_flag: 23.1, hearing_flag: 1.4, dental_flag: 19.5, bmi_flag: 32.8 }
 ];
 
-const MOCK_BMI_TRENDS: BmiTrendRecord[] = [
-  { age: 6, underweight: 8.5, normal: 77.3, overweight: 9.8, obese: 4.4 },
-  { age: 7, underweight: 7.9, normal: 76.3, overweight: 10.6, obese: 5.2 },
-  { age: 8, underweight: 7.2, normal: 75.3, overweight: 11.5, obese: 6.0 },
-  { age: 9, underweight: 6.6, normal: 74.3, overweight: 12.4, obese: 6.7 },
-  { age: 10, underweight: 6.0, normal: 72.6, overweight: 13.8, obese: 7.6 },
-  { age: 11, underweight: 5.5, normal: 70.7, overweight: 15.1, obese: 8.7 },
-  { age: 12, underweight: 5.1, normal: 69.3, overweight: 16.2, obese: 9.4 },
-  { age: 13, underweight: 4.8, normal: 68.0, overweight: 17.0, obese: 10.2 },
-  { age: 14, underweight: 4.5, normal: 66.6, overweight: 17.9, obese: 11.0 },
-  { age: 15, underweight: 4.2, normal: 65.7, overweight: 18.5, obese: 11.6 },
-  { age: 16, underweight: 4.0, normal: 64.5, overweight: 19.2, obese: 12.3 },
-  { age: 17, underweight: 3.8, normal: 63.4, overweight: 19.9, obese: 12.9 }
-];
-
 const MOCK_SCHOOL_RANKINGS: SchoolRecord[] = [
   { id: "SCH-101", school_name: "Dubai International Academy", region: "Dubai", country: "UAE", enrolled_students: 2450, screening_completion: 98.4, referral_rate: 14.2, followup_completion: 91.5, primary_flag_risk: "Vision", status: "Exemplary" },
   { id: "SCH-102", school_name: "Al Yasmina Academy", region: "Abu Dhabi", country: "UAE", enrolled_students: 1980, screening_completion: 96.2, referral_rate: 16.8, followup_completion: 88.0, primary_flag_risk: "BMI", status: "Exemplary" },
@@ -143,6 +123,9 @@ export default function Home() {
   const [minCompletionFilter, setMinCompletionFilter] = useState<number>(0);
   const [backendStatus, setBackendStatus] = useState<'online' | 'fallback'>('fallback');
   const [loading, setLoading] = useState<boolean>(true);
+  
+  // Click & Open Intelligence Layer State
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   const API_BASE = "http://localhost:8082/api";
 
@@ -236,20 +219,81 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-brand-bg text-gray-200 font-sans">
+    <div className="flex h-screen w-screen overflow-hidden bg-brand-bg text-gray-200 font-sans relative">
       
       {/* ========================================================================= */}
-      {/* 70% MAIN STAGE: Completion Gauges, Referral Funnel, Flag Bars & Rankings */}
+      {/* 100% FULL-WIDTH MAIN STAGE */}
       {/* ========================================================================= */}
-      <main className="w-[70%] h-full flex flex-col p-6 gap-5 overflow-hidden">
+      <main className="w-full h-full flex flex-col p-6 gap-4 overflow-hidden">
         
-        {/* Top Section: Regional Screening Gauges */}
+        {/* Top Header Bar with Developer Signature & Intelligence Layer Open Trigger */}
+        <div className="flex items-center justify-between bg-brand-surface/60 border border-brand-border px-5 py-3 rounded-lg backdrop-blur-md">
+          
+          {/* Left Title & Internship Badge */}
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-brand-primary/10 border border-brand-primary/30">
+              <Activity className="w-5 h-5 text-brand-primary" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg font-black tracking-tight text-white uppercase leading-tight font-sans">
+                  School Health Screening Dashboard
+                </h1>
+                <span className="px-2.5 py-0.5 rounded-full bg-brand-primary/10 border border-brand-primary/40 text-[10px] font-mono font-bold text-brand-primary uppercase">
+                  Infocreon Internship PoC #40
+                </span>
+              </div>
+              <p className="text-[11px] text-gray-400 font-mono mt-0.5">
+                Gulf Student Vision, Hearing, Dental & BMI Screening Intelligence
+              </p>
+            </div>
+          </div>
+
+          {/* Center: Developer Signature */}
+          <div className="hidden lg:flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-brand-surface border border-brand-border text-xs font-mono">
+            <User className="w-3.5 h-3.5 text-brand-primary" />
+            <span className="text-gray-400">Developer:</span>
+            <span className="text-white font-bold">Awaaz Muhammed</span>
+            <span className="text-gray-600">|</span>
+            <span className="text-brand-secondary font-bold">GitHub: @Awaaz-123</span>
+          </div>
+
+          {/* Right Controls: Mode Status & Click & Open Intelligence Layer Button */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-brand-bg border border-brand-border text-[10px] font-mono">
+              <span className={`w-2 h-2 rounded-full ${backendStatus === 'online' ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`} />
+              <span className="text-gray-300 font-semibold capitalize">{backendStatus} mode</span>
+            </div>
+
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-primary/10 hover:bg-brand-primary/20 border border-brand-primary/60 text-brand-primary text-xs font-bold font-mono transition-all cyan-glow shadow-[0_0_12px_rgba(56,189,248,0.2)]"
+            >
+              <Sparkles className="w-4 h-4 animate-pulse text-brand-primary" />
+              <span>INTELLIGENCE LAYER</span>
+              <Sliders className="w-3.5 h-3.5 text-brand-secondary ml-1" />
+            </button>
+          </div>
+
+        </div>
+
+        {/* Section 1: Regional Screening Gauges */}
         <div className="flex flex-col gap-2">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center px-1">
             <h2 className="text-xs font-bold tracking-wider text-white uppercase font-mono flex items-center gap-1.5">
               <Award className="w-4 h-4 text-brand-primary" /> Regional Screening-Coverage Completion Gauges
             </h2>
-            <span className="text-[10px] font-mono text-gray-500">WHO & Gulf MOE Benchmarks</span>
+            <div className="flex items-center gap-3">
+              {selectedRegion && (
+                <button
+                  onClick={() => setSelectedRegion(null)}
+                  className="text-[10px] font-mono text-brand-primary hover:underline font-bold"
+                >
+                  Clear Region Filter ({selectedRegion})
+                </button>
+              )}
+              <span className="text-[10px] font-mono text-gray-500">WHO & Gulf MOE Benchmarks</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-6 gap-3">
@@ -281,8 +325,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Middle Section: Referral Funnel (Left) + BMI Trends & Flag-Rates (Right) */}
-        <div className="h-[42%] w-full flex gap-5 overflow-hidden">
+        {/* Section 2: Referral Funnel (Left) + Vision/Dental Flag-Rates (Right) */}
+        <div className="h-[40%] w-full flex gap-4 overflow-hidden">
           
           {/* Referral-to-Treatment Funnel */}
           <div className="w-1/2 h-full bg-brand-surface/30 border border-brand-border rounded-lg p-4 flex flex-col">
@@ -344,7 +388,7 @@ export default function Home() {
 
         </div>
 
-        {/* Bottom Section: TanStack School Ranking Table */}
+        {/* Section 3: TanStack School Ranking Table */}
         <div className="flex-1 w-full bg-brand-surface/20 border border-brand-border rounded-lg p-4 flex flex-col overflow-hidden">
           <div className="flex items-center justify-between mb-2 pb-2 border-b border-brand-border">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
@@ -365,77 +409,108 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Bottom Footer Bar with Developer Signature */}
+        <div className="flex items-center justify-between text-[11px] font-mono text-gray-400 pt-1 border-t border-brand-border/60">
+          <div className="flex items-center gap-2">
+            <span className="text-white font-bold">Infocreon Internship PoC #40</span>
+            <span className="text-gray-600">|</span>
+            <span>Developed by <strong className="text-brand-primary font-bold">Awaaz Muhammed</strong></span>
+            <span className="text-gray-600">|</span>
+            <span className="text-brand-secondary font-bold">GitHub: @Awaaz-123</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span>Next.js Frontend :3002</span>
+            <span>FastAPI Backend :8082</span>
+          </div>
+        </div>
+
       </main>
 
       {/* ========================================================================= */}
-      {/* 30% SIDEBAR: High Level Metrics, Context, Filters & Exporter */}
+      {/* CLICK & OPEN INTELLIGENCE LAYER DRAWER */}
       {/* ========================================================================= */}
-      <aside className="w-[30%] h-full flex flex-col border-l border-brand-border bg-brand-surface/40 backdrop-blur-md p-6 overflow-y-auto z-20">
+
+      {/* Dark Backdrop Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Slide-Over Drawer */}
+      <aside 
+        className={`fixed top-0 right-0 w-[440px] max-w-full h-full bg-brand-surface/95 border-l border-brand-border backdrop-blur-xl z-50 p-6 flex flex-col overflow-y-auto shadow-2xl transition-transform duration-300 ease-in-out ${
+          sidebarOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
         
-        {/* Header Title */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-[10px] tracking-[0.25em] font-mono text-brand-primary uppercase font-bold">
-              Real Rails PoC #40
-            </span>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-brand-bg border border-brand-border text-[10px] font-mono">
-              <span className={`w-1.5 h-1.5 rounded-full ${backendStatus === 'online' ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`} />
-              <span className="text-gray-400 capitalize">{backendStatus} mode</span>
+        {/* Intelligence Layer Header */}
+        <div className="flex items-center justify-between pb-4 border-b border-brand-border mb-5">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-brand-primary" />
+            <div>
+              <h2 className="text-base font-black tracking-tight text-white uppercase leading-tight font-sans">
+                Intelligence Layer & Controls
+              </h2>
+              <span className="text-[10px] tracking-widest font-mono text-brand-primary uppercase font-bold">
+                Infocreon Internship PoC #40
+              </span>
             </div>
           </div>
-          <h1 className="text-xl font-black tracking-tight text-white uppercase leading-tight font-sans">
-            School Health Screening Dashboard
-          </h1>
-          <p className="text-[11px] text-gray-400 font-mono mt-1">
-            Rail: School Health (Vision, Hearing, Dental & BMI)
-          </p>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="p-1.5 rounded-lg bg-brand-bg hover:bg-brand-border border border-brand-border text-gray-400 hover:text-white transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-          {/* High-Level Metric Card */}
-          <div className="mt-4 p-4 rounded bg-brand-surface/80 border border-brand-border relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-brand-primary/5 rounded-full blur-2xl group-hover:bg-brand-primary/10 transition-all duration-300" />
-            <span className="text-[10px] tracking-wider font-mono text-gray-400 uppercase">
-              {selectedRegion ? `REGION: ${selectedRegion.toUpperCase()}` : 'ALL GULF REGIONS OVERALL'}
+        {/* High-Level Metric Card */}
+        <div className="mb-5 p-4 rounded-lg bg-brand-bg/80 border border-brand-border relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-brand-primary/5 rounded-full blur-2xl group-hover:bg-brand-primary/10 transition-all duration-300" />
+          <span className="text-[10px] tracking-wider font-mono text-gray-400 uppercase">
+            {selectedRegion ? `REGION: ${selectedRegion.toUpperCase()}` : 'ALL GULF REGIONS OVERALL'}
+          </span>
+          <div className="flex items-baseline justify-between mt-1">
+            <span className="text-3xl font-black font-mono text-brand-primary">
+              {summaryData?.completion_rate || 88.7}%
             </span>
-            <div className="flex items-baseline justify-between mt-1">
-              <span className="text-2xl font-black font-mono text-brand-primary">
-                {summaryData?.completion_rate || 88.7}%
-              </span>
-              <span className="text-xs font-mono text-emerald-400 font-bold flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Target Met
+            <span className="text-xs font-mono text-emerald-400 font-bold flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Target Met
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-brand-border/60 text-xs">
+            <div>
+              <span className="text-[10px] text-gray-400 font-mono uppercase block">Target Students</span>
+              <span className="font-mono font-bold text-white">
+                {(summaryData?.target_students || 2445000).toLocaleString()}
               </span>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-brand-border/60 text-xs">
-              <div>
-                <span className="text-[10px] text-gray-400 font-mono uppercase block">Target Students</span>
-                <span className="font-mono font-bold text-white">
-                  {(summaryData?.target_students || 2445000).toLocaleString()}
-                </span>
-              </div>
-              <div>
-                <span className="text-[10px] text-gray-400 font-mono uppercase block">Screened Students</span>
-                <span className="font-mono font-bold text-brand-secondary">
-                  {(summaryData?.screened_students || 2168350).toLocaleString()}
-                </span>
-              </div>
+            <div>
+              <span className="text-[10px] text-gray-400 font-mono uppercase block">Screened Students</span>
+              <span className="font-mono font-bold text-brand-secondary">
+                {(summaryData?.screened_students || 2168350).toLocaleString()}
+              </span>
             </div>
           </div>
         </div>
 
         {/* Section B: Why This Matters */}
-        <section className="mb-5 p-4 rounded bg-brand-surface/30 border border-brand-border">
-          <h2 className="text-xs font-bold tracking-wider text-brand-primary uppercase mb-1.5 flex items-center gap-1.5">
+        <section className="mb-5 p-4 rounded-lg bg-brand-bg/40 border border-brand-border">
+          <h3 className="text-xs font-bold tracking-wider text-brand-primary uppercase mb-1.5 flex items-center gap-1.5">
             <Info className="w-3.5 h-3.5" /> WHY THIS MATTERS
-          </h2>
+          </h3>
           <p className="text-xs text-gray-300 leading-relaxed font-sans">
             {activeRegionMeta?.why_it_matters || summaryData?.why_it_matters}
           </p>
         </section>
 
         {/* Section C: Who Controls the Rail */}
-        <section className="mb-5 p-4 rounded bg-brand-surface/30 border border-brand-border">
-          <h2 className="text-xs font-bold tracking-wider text-brand-secondary uppercase mb-1.5 flex items-center gap-1.5">
+        <section className="mb-5 p-4 rounded-lg bg-brand-bg/40 border border-brand-border">
+          <h3 className="text-xs font-bold tracking-wider text-brand-secondary uppercase mb-1.5 flex items-center gap-1.5">
             <Building className="w-3.5 h-3.5" /> WHO CONTROLS THE RAIL
-          </h2>
+          </h3>
           <p className="text-xs text-gray-300 leading-relaxed font-sans">
             {activeRegionMeta?.power_dynamics || summaryData?.power_dynamics}
           </p>
@@ -453,7 +528,7 @@ export default function Home() {
                 className={`py-1.5 px-2 rounded border text-left font-bold transition-all ${
                   selectedRegion === null
                     ? 'bg-brand-primary/10 border-brand-primary text-brand-primary'
-                    : 'bg-brand-surface border-brand-border text-gray-400 hover:border-gray-700'
+                    : 'bg-brand-bg border-brand-border text-gray-400 hover:border-gray-700'
                 }`}
               >
                 ALL REGIONS
@@ -465,7 +540,7 @@ export default function Home() {
                   className={`py-1.5 px-2 rounded border text-left font-bold transition-all truncate ${
                     selectedRegion === r.region
                       ? 'bg-brand-primary/10 border-brand-primary text-brand-primary'
-                      : 'bg-brand-surface border-brand-border text-gray-400 hover:border-gray-700'
+                      : 'bg-brand-bg border-brand-border text-gray-400 hover:border-gray-700'
                   }`}
                 >
                   {r.region.toUpperCase()}
@@ -497,19 +572,32 @@ export default function Home() {
         </section>
 
         {/* Section E: Download Sample Data */}
-        <div className="mt-auto pt-4 border-t border-brand-border flex gap-2">
+        <div className="mb-6 flex gap-2">
           <button
             onClick={() => handleDownload('csv')}
-            className="flex-1 py-2 px-3 bg-brand-primary text-brand-bg hover:bg-brand-primary/90 border border-brand-primary text-xs font-bold font-mono rounded flex items-center justify-center gap-1.5 transition-colors"
+            className="flex-1 py-2 px-3 bg-brand-primary text-brand-bg hover:bg-brand-primary/90 border border-brand-primary text-xs font-bold font-mono rounded-lg flex items-center justify-center gap-1.5 transition-colors"
           >
             <Download className="w-3.5 h-3.5" /> CSV DATA
           </button>
           <button
             onClick={() => handleDownload('json')}
-            className="flex-1 py-2 px-3 bg-brand-surface hover:bg-brand-border border border-brand-border text-gray-300 hover:text-white text-xs font-bold font-mono rounded flex items-center justify-center gap-1.5 transition-colors"
+            className="flex-1 py-2 px-3 bg-brand-bg hover:bg-brand-border border border-brand-border text-gray-300 hover:text-white text-xs font-bold font-mono rounded-lg flex items-center justify-center gap-1.5 transition-colors"
           >
             <Download className="w-3.5 h-3.5 text-brand-secondary" /> JSON DATA
           </button>
+        </div>
+
+        {/* Section F: Developer Signature Footer Card */}
+        <div className="mt-auto p-4 rounded-lg bg-brand-bg/80 border border-brand-border text-xs font-mono">
+          <div className="flex items-center gap-2 mb-1.5">
+            <User className="w-4 h-4 text-brand-primary" />
+            <span className="text-white font-bold">Developer Signature</span>
+          </div>
+          <div className="text-[11px] text-gray-300 space-y-1 pl-6">
+            <div>Developer: <strong className="text-brand-primary">Awaaz Muhammed</strong></div>
+            <div>GitHub: <strong className="text-brand-secondary">@Awaaz-123</strong></div>
+            <div>Program: <strong className="text-emerald-400">Infocreon Internship</strong></div>
+          </div>
         </div>
 
       </aside>

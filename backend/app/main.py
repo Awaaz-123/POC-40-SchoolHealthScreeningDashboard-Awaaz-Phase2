@@ -15,7 +15,7 @@ from app.adapters.school_health_adapter import (
 from app.adapters.mock_data import SCHOOL_RANKINGS_DATA
 
 app = FastAPI(
-    title="Real Rails School Health Screening API",
+    title="Infocreon Internship School Health Screening API",
     description="Backend API serving Gulf student vision, hearing, dental, and BMI screening statistics and referral completion metrics.",
     version="1.0.0"
 )

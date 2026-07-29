@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "School Health Screening Dashboard | Real Rails Intelligence Library",
+  title: "School Health Screening Dashboard | Infocreon Internship",
   description: "Student vision, hearing, dental, and BMI screening coverage across Gulf school systems. Real-time screening coverage gauges, referral-to-treatment funnels, BMI age cohort trends, and school rankings.",
 };
 
