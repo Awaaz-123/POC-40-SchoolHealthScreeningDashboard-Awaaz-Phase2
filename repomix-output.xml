@@ -1,0 +1,1860 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+architecture/
+  .gitkeep
+backend/
+  app/
+    adapters/
+      mock_data.py
+      school_health_adapter.py
+    main.py
+  requirements.txt
+frontend/
+  public/
+    file.svg
+    globe.svg
+    next.svg
+    vercel.svg
+    window.svg
+  src/
+    app/
+      favicon.ico
+      globals.css
+      layout.tsx
+      page.tsx
+    components/
+      SchoolRankingTable.tsx
+  .gitignore
+  AGENTS.md
+  CLAUDE.md
+  eslint.config.mjs
+  next.config.ts
+  package.json
+  postcss.config.mjs
+  README.md
+  tsconfig.json
+screenshots/
+  .gitkeep
+.gitignore
+README.md
+UAT_CHECKLIST.md
+VAR_REPORT.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="architecture/.gitkeep">
+# Place architecture design documents here
+</file>
+
+<file path="backend/app/adapters/mock_data.py">
+# Mock Data for PoC #40: School Health Screening Dashboard
+
+REGIONS_METADATA = {
+    "Dubai": {
+        "country": "UAE",
+        "total_schools": 220,
+        "target_students": 310000,
+        "screened_students": 288300,
+        "completion_rate": 93.0,
+        "why_it_matters": "High-density private and public school network with mandated annual screening; tracking follow-through ensures early detection of refractive vision errors and childhood caries before academic performance suffers.",
+        "power_dynamics": "Joint oversight between Dubai Health Authority (DHA) and Knowledge and Human Development Authority (KHDA) requires aligned protocols between health regulators and private school operators."
+    },
+    "Abu Dhabi": {
+        "country": "UAE",
+        "total_schools": 260,
+        "target_students": 380000,
+        "screened_students": 349600,
+        "completion_rate": 92.0,
+        "why_it_matters": "Extensive screening across urban centers and Al Ain / Al Dhafra regions; critical for detecting early hearing deficits and metabolic risks in younger cohorts.",
+        "power_dynamics": "Department of Health Abu Dhabi (DoH) mandates strict EMR integration for school clinics, placing compliance responsibility directly on licensed school nurses."
+    },
+    "Sharjah": {
+        "country": "UAE",
+        "total_schools": 140,
+        "target_students": 185000,
+        "screened_students": 160950,
+        "completion_rate": 87.0,
+        "why_it_matters": "Rapidly growing student population; identifying referral drop-offs between primary school screenings and secondary care prevents irreversible vision loss.",
+        "power_dynamics": "Ministry of Health and Prevention (MOHAP) coordinates screening alongside Sharjah Private Education Authority (SPEA)."
+    },
+    "Riyadh": {
+        "country": "Saudi Arabia",
+        "total_schools": 480,
+        "target_students": 620000,
+        "screened_students": 545600,
+        "completion_rate": 88.0,
+        "why_it_matters": "Massive student volume; early BMI screening and dental interventions address rising childhood obesity and oral health burdens across the central region.",
+        "power_dynamics": "Saudi Ministry of Health (MOH) and Ministry of Education (MOE) co-manage the National School Health Program, navigating cross-ministerial referral pipelines."
+    },
+    "Makkah & Jeddah": {
+        "country": "Saudi Arabia",
+        "total_schools": 410,
+        "target_students": 540000,
+        "screened_students": 459000,
+        "completion_rate": 85.0,
+        "why_it_matters": "Diverse socio-demographic student body; robust vision screening catches amblyopia early when corrective intervention is most cost-effective.",
+        "power_dynamics": "Regional Health Clusters drive clinical referrals while school principals control access to physical screening days."
+    },
+    "Eastern Province": {
+        "country": "Saudi Arabia",
+        "total_schools": 310,
+        "target_students": 410000,
+        "screened_students": 364900,
+        "completion_rate": 89.0,
+        "why_it_matters": "Industrial and coastal corridor; tracking referral-to-treatment loops guarantees students flagged for hearing loss receive specialized audiometry.",
+        "power_dynamics": "School health units rely on primary healthcare center (PHCC) capacity to process student referrals promptly."
+    }
+}
+
+# Referral to Treatment Funnel Data (Overall Aggregated Stage Counts)
+REFERRAL_FUNNEL_STAGES = [
+    {"stage": "Target Students", "count": 2445000, "percentage": 100.0, "fill": "#38BDF8"},
+    {"stage": "Screening Completed", "count": 2168350, "percentage": 88.7, "fill": "#818CF8"},
+    {"stage": "Identified / Flagged", "count": 390300, "percentage": 18.0, "fill": "#F59E0B"},
+    {"stage": "Referred to Clinic", "count": 321500, "percentage": 82.4, "fill": "#EC4899"},
+    {"stage": "Treatment Completed", "count": 218620, "percentage": 68.0, "fill": "#10B981"}
+]
+
+# Flag Rate by Grade (Vision, Hearing, Dental, BMI)
+FLAG_RATES_BY_GRADE = [
+    {"grade": "Grade 1", "age": 6, "vision_flag": 6.2, "hearing_flag": 3.1, "dental_flag": 24.5, "bmi_flag": 14.2},
+    {"grade": "Grade 2", "age": 7, "vision_flag": 7.4, "hearing_flag": 2.8, "dental_flag": 26.1, "bmi_flag": 15.8},
+    {"grade": "Grade 3", "age": 8, "vision_flag": 8.9, "hearing_flag": 2.5, "dental_flag": 28.4, "bmi_flag": 17.5},
+    {"grade": "Grade 4", "age": 9, "vision_flag": 10.5, "hearing_flag": 2.3, "dental_flag": 30.2, "bmi_flag": 19.1},
+    {"grade": "Grade 5", "age": 10, "vision_flag": 12.1, "hearing_flag": 2.1, "dental_flag": 31.8, "bmi_flag": 21.4},
+    {"grade": "Grade 6", "age": 11, "vision_flag": 13.8, "hearing_flag": 2.0, "dental_flag": 29.5, "bmi_flag": 23.8},
+    {"grade": "Grade 7", "age": 12, "vision_flag": 15.6, "hearing_flag": 1.9, "dental_flag": 27.2, "bmi_flag": 25.6},
+    {"grade": "Grade 8", "age": 13, "vision_flag": 17.2, "hearing_flag": 1.8, "dental_flag": 25.0, "bmi_flag": 27.2},
+    {"grade": "Grade 9", "age": 14, "vision_flag": 18.9, "hearing_flag": 1.7, "dental_flag": 23.4, "bmi_flag": 28.9},
+    {"grade": "Grade 10", "age": 15, "vision_flag": 20.4, "hearing_flag": 1.6, "dental_flag": 22.1, "bmi_flag": 30.1},
+    {"grade": "Grade 11", "age": 16, "vision_flag": 21.8, "hearing_flag": 1.5, "dental_flag": 20.8, "bmi_flag": 31.5},
+    {"grade": "Grade 12", "age": 17, "vision_flag": 23.1, "hearing_flag": 1.4, "dental_flag": 19.5, "bmi_flag": 32.8}
+]
+
+# BMI Trend by Age Cohort
+BMI_TRENDS_BY_AGE = [
+    {"age": 6, "underweight": 8.5, "normal": 77.3, "overweight": 9.8, "obese": 4.4},
+    {"age": 7, "underweight": 7.9, "normal": 76.3, "overweight": 10.6, "obese": 5.2},
+    {"age": 8, "underweight": 7.2, "normal": 75.3, "overweight": 11.5, "obese": 6.0},
+    {"age": 9, "underweight": 6.6, "normal": 74.3, "overweight": 12.4, "obese": 6.7},
+    {"age": 10, "underweight": 6.0, "normal": 72.6, "overweight": 13.8, "obese": 7.6},
+    {"age": 11, "underweight": 5.5, "normal": 70.7, "overweight": 15.1, "obese": 8.7},
+    {"age": 12, "underweight": 5.1, "normal": 69.3, "overweight": 16.2, "obese": 9.4},
+    {"age": 13, "underweight": 4.8, "normal": 68.0, "overweight": 17.0, "obese": 10.2},
+    {"age": 14, "underweight": 4.5, "normal": 66.6, "overweight": 17.9, "obese": 11.0},
+    {"age": 15, "underweight": 4.2, "normal": 65.7, "overweight": 18.5, "obese": 11.6},
+    {"age": 16, "underweight": 4.0, "normal": 64.5, "overweight": 19.2, "obese": 12.3},
+    {"age": 17, "underweight": 3.8, "normal": 63.4, "overweight": 19.9, "obese": 12.9}
+]
+
+# Detailed School Ranking Dataset (for TanStack Table)
+SCHOOL_RANKINGS_DATA = [
+    {
+        "id": "SCH-101",
+        "school_name": "Dubai International Academy",
+        "region": "Dubai",
+        "country": "UAE",
+        "enrolled_students": 2450,
+        "screening_completion": 98.4,
+        "referral_rate": 14.2,
+        "followup_completion": 91.5,
+        "primary_flag_risk": "Vision",
+        "status": "Exemplary"
+    },
+    {
+        "id": "SCH-102",
+        "school_name": "Al Yasmina Academy",
+        "region": "Abu Dhabi",
+        "country": "UAE",
+        "enrolled_students": 1980,
+        "screening_completion": 96.2,
+        "referral_rate": 16.8,
+        "followup_completion": 88.0,
+        "primary_flag_risk": "BMI",
+        "status": "Exemplary"
+    },
+    {
+        "id": "SCH-103",
+        "school_name": "Riyadh Educational Complex",
+        "region": "Riyadh",
+        "country": "Saudi Arabia",
+        "enrolled_students": 3200,
+        "screening_completion": 94.1,
+        "referral_rate": 19.5,
+        "followup_completion": 74.2,
+        "primary_flag_risk": "Dental",
+        "status": "Target Met"
+    },
+    {
+        "id": "SCH-104",
+        "school_name": "Sharjah Model School",
+        "region": "Sharjah",
+        "country": "UAE",
+        "enrolled_students": 1450,
+        "screening_completion": 91.0,
+        "referral_rate": 18.0,
+        "followup_completion": 69.5,
+        "primary_flag_risk": "Dental",
+        "status": "Target Met"
+    },
+    {
+        "id": "SCH-105",
+        "school_name": "Jeddah Knowledge International",
+        "region": "Makkah & Jeddah",
+        "country": "Saudi Arabia",
+        "enrolled_students": 2100,
+        "screening_completion": 89.5,
+        "referral_rate": 21.4,
+        "followup_completion": 62.0,
+        "primary_flag_risk": "Vision",
+        "status": "Follow-Up Gap"
+    },
+    {
+        "id": "SCH-106",
+        "school_name": "Dhahran Ahliyyah Schools",
+        "region": "Eastern Province",
+        "country": "Saudi Arabia",
+        "enrolled_students": 2800,
+        "screening_completion": 95.8,
+        "referral_rate": 15.3,
+        "followup_completion": 84.6,
+        "primary_flag_risk": "Hearing",
+        "status": "Exemplary"
+    },
+    {
+        "id": "SCH-107",
+        "school_name": "Emirates National School",
+        "region": "Abu Dhabi",
+        "country": "UAE",
+        "enrolled_students": 3100,
+        "screening_completion": 93.5,
+        "referral_rate": 17.1,
+        "followup_completion": 81.2,
+        "primary_flag_risk": "BMI",
+        "status": "Target Met"
+    },
+    {
+        "id": "SCH-108",
+        "school_name": "Al Khobar Secondary Academy",
+        "region": "Eastern Province",
+        "country": "Saudi Arabia",
+        "enrolled_students": 1650,
+        "screening_completion": 86.4,
+        "referral_rate": 22.8,
+        "followup_completion": 58.4,
+        "primary_flag_risk": "Vision",
+        "status": "Follow-Up Gap"
+    },
+    {
+        "id": "SCH-109",
+        "school_name": "GEMS World Academy",
+        "region": "Dubai",
+        "country": "UAE",
+        "enrolled_students": 2300,
+        "screening_completion": 97.1,
+        "referral_rate": 13.9,
+        "followup_completion": 94.0,
+        "primary_flag_risk": "Vision",
+        "status": "Exemplary"
+    },
+    {
+        "id": "SCH-110",
+        "school_name": "Al Falah Secondary School",
+        "region": "Makkah & Jeddah",
+        "country": "Saudi Arabia",
+        "enrolled_students": 1890,
+        "screening_completion": 81.2,
+        "referral_rate": 24.5,
+        "followup_completion": 51.0,
+        "primary_flag_risk": "Dental",
+        "status": "Action Required"
+    }
+]
+</file>
+
+<file path="backend/app/adapters/school_health_adapter.py">
+# Adapter module for School Health Screening Dashboard
+
+import pandas as pd
+from app.adapters.mock_data import (
+    REGIONS_METADATA, 
+    REFERRAL_FUNNEL_STAGES, 
+    FLAG_RATES_BY_GRADE, 
+    BMI_TRENDS_BY_AGE, 
+    SCHOOL_RANKINGS_DATA
+)
+
+def get_regions_summary():
+    """Returns a list of regions with basic completion metrics"""
+    results = []
+    for region, meta in REGIONS_METADATA.items():
+        results.append({
+            "region": region,
+            "country": meta["country"],
+            "total_schools": meta["total_schools"],
+            "target_students": meta["target_students"],
+            "screened_students": meta["screened_students"],
+            "completion_rate": meta["completion_rate"],
+            "why_it_matters": meta["why_it_matters"],
+            "power_dynamics": meta["power_dynamics"]
+        })
+    return results
+
+def get_screening_summary(region: str = None):
+    """Calculates overall or region-filtered screening summary metrics"""
+    if region and region in REGIONS_METADATA:
+        meta = REGIONS_METADATA[region]
+        target = meta["target_students"]
+        screened = meta["screened_students"]
+        comp_rate = meta["completion_rate"]
+        why = meta["why_it_matters"]
+        power = meta["power_dynamics"]
+    else:
+        target = sum(m["target_students"] for m in REGIONS_METADATA.values())
+        screened = sum(m["screened_students"] for m in REGIONS_METADATA.values())
+        comp_rate = round((screened / target) * 100, 1)
+        why = "School screening is the earliest, cheapest point to catch treatable conditions — this shows education and health ministries where coverage and follow-through are breaking down."
+        power = "Joint governance between Ministries of Education (access to schools) and Ministries of Health (clinical protocols and referral pathways) creates bureaucratic friction, determining whether identified student health conditions lead to timely clinical care or die in referral backlogs."
+
+    return {
+        "target_students": target,
+        "screened_students": screened,
+        "completion_rate": comp_rate,
+        "why_it_matters": why,
+        "power_dynamics": power,
+        "funnel_stages": REFERRAL_FUNNEL_STAGES
+    }
+
+def get_bmi_trends():
+    return BMI_TRENDS_BY_AGE
+
+def get_flag_rates():
+    return FLAG_RATES_BY_GRADE
+
+def get_school_rankings(region: str = None, min_completion: float = 0.0):
+    df = pd.DataFrame(SCHOOL_RANKINGS_DATA)
+    
+    if region:
+        df = df[df["region"] == region]
+        
+    if min_completion > 0:
+        df = df[df["screening_completion"] >= min_completion]
+        
+    return df.to_dict(orient="records")
+</file>
+
+<file path="backend/requirements.txt">
+fastapi==0.111.0
+uvicorn==0.30.1
+pandas==2.2.2
+requests==2.32.3
+python-dotenv==1.0.1
+pydantic==2.7.4
+openpyxl==3.1.5
+</file>
+
+<file path="frontend/public/file.svg">
+<svg fill="none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14.5 13.5V5.41a1 1 0 0 0-.3-.7L9.8.29A1 1 0 0 0 9.08 0H1.5v13.5A2.5 2.5 0 0 0 4 16h8a2.5 2.5 0 0 0 2.5-2.5m-1.5 0v-7H8v-5H3v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1M9.5 5V2.12L12.38 5zM5.13 5h-.62v1.25h2.12V5zm-.62 3h7.12v1.25H4.5zm.62 3h-.62v1.25h7.12V11z" clip-rule="evenodd" fill="#666" fill-rule="evenodd"/></svg>
+</file>
+
+<file path="frontend/public/globe.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g clip-path="url(#a)"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.27 14.1a6.5 6.5 0 0 0 3.67-3.45q-1.24.21-2.7.34-.31 1.83-.97 3.1M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.48-1.52a7 7 0 0 1-.96 0H7.5a4 4 0 0 1-.84-1.32q-.38-.89-.63-2.08a40 40 0 0 0 3.92 0q-.25 1.2-.63 2.08a4 4 0 0 1-.84 1.31zm2.94-4.76q1.66-.15 2.95-.43a7 7 0 0 0 0-2.58q-1.3-.27-2.95-.43a18 18 0 0 1 0 3.44m-1.27-3.54a17 17 0 0 1 0 3.64 39 39 0 0 1-4.3 0 17 17 0 0 1 0-3.64 39 39 0 0 1 4.3 0m1.1-1.17q1.45.13 2.69.34a6.5 6.5 0 0 0-3.67-3.44q.65 1.26.98 3.1M8.48 1.5l.01.02q.41.37.84 1.31.38.89.63 2.08a40 40 0 0 0-3.92 0q.25-1.2.63-2.08a4 4 0 0 1 .85-1.32 7 7 0 0 1 .96 0m-2.75.4a6.5 6.5 0 0 0-3.67 3.44 29 29 0 0 1 2.7-.34q.31-1.83.97-3.1M4.58 6.28q-1.66.16-2.95.43a7 7 0 0 0 0 2.58q1.3.27 2.95.43a18 18 0 0 1 0-3.44m.17 4.71q-1.45-.12-2.69-.34a6.5 6.5 0 0 0 3.67 3.44q-.65-1.27-.98-3.1" fill="#666"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h16v16H0z"/></clipPath></defs></svg>
+</file>
+
+<file path="frontend/public/next.svg">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80"><path fill="#000" d="M262 0h68.5v12.7h-27.2v66.6h-13.6V12.7H262V0ZM149 0v12.7H94v20.4h44.3v12.6H94v21h55v12.6H80.5V0h68.7zm34.3 0h-17.8l63.8 79.4h17.9l-32-39.7 32-39.6h-17.9l-23 28.6-23-28.6zm18.3 56.7-9-11-27.1 33.7h17.8l18.3-22.7z"/><path fill="#000" d="M81 79.3 17 0H0v79.3h13.6V17l50.2 62.3H81Zm252.6-.4c-1 0-1.8-.4-2.5-1s-1.1-1.6-1.1-2.6.3-1.8 1-2.5 1.6-1 2.6-1 1.8.3 2.5 1a3.4 3.4 0 0 1 .6 4.3 3.7 3.7 0 0 1-3 1.8zm23.2-33.5h6v23.3c0 2.1-.4 4-1.3 5.5a9.1 9.1 0 0 1-3.8 3.5c-1.6.8-3.5 1.3-5.7 1.3-2 0-3.7-.4-5.3-1s-2.8-1.8-3.7-3.2c-.9-1.3-1.4-3-1.4-5h6c.1.8.3 1.6.7 2.2s1 1.2 1.6 1.5c.7.4 1.5.5 2.4.5 1 0 1.8-.2 2.4-.6a4 4 0 0 0 1.6-1.8c.3-.8.5-1.8.5-3V45.5zm30.9 9.1a4.4 4.4 0 0 0-2-3.3 7.5 7.5 0 0 0-4.3-1.1c-1.3 0-2.4.2-3.3.5-.9.4-1.6 1-2 1.6a3.5 3.5 0 0 0-.3 4c.3.5.7.9 1.3 1.2l1.8 1 2 .5 3.2.8c1.3.3 2.5.7 3.7 1.2a13 13 0 0 1 3.2 1.8 8.1 8.1 0 0 1 3 6.5c0 2-.5 3.7-1.5 5.1a10 10 0 0 1-4.4 3.5c-1.8.8-4.1 1.2-6.8 1.2-2.6 0-4.9-.4-6.8-1.2-2-.8-3.4-2-4.5-3.5a10 10 0 0 1-1.7-5.6h6a5 5 0 0 0 3.5 4.6c1 .4 2.2.6 3.4.6 1.3 0 2.5-.2 3.5-.6 1-.4 1.8-1 2.4-1.7a4 4 0 0 0 .8-2.4c0-.9-.2-1.6-.7-2.2a11 11 0 0 0-2.1-1.4l-3.2-1-3.8-1c-2.8-.7-5-1.7-6.6-3.2a7.2 7.2 0 0 1-2.4-5.7 8 8 0 0 1 1.7-5 10 10 0 0 1 4.3-3.5c2-.8 4-1.2 6.4-1.2 2.3 0 4.4.4 6.2 1.2 1.8.8 3.2 2 4.3 3.4 1 1.4 1.5 3 1.5 5h-5.8z"/></svg>
+</file>
+
+<file path="frontend/public/vercel.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1155 1000"><path d="m577.3 0 577.4 1000H0z" fill="#fff"/></svg>
+</file>
+
+<file path="frontend/public/window.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 2.5h13v10a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1zM0 1h16v11.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 0 12.5zm3.75 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M7 4.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m1.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" fill="#666"/></svg>
+</file>
+
+<file path="frontend/src/app/globals.css">
+@import "tailwindcss";
+
+:root {
+  --background: #030712;
+  --foreground: #f3f4f6;
+  
+  --brand-bg: #030712;
+  --brand-surface: #0B1117;
+  --brand-primary: #38BDF8;
+  --brand-secondary: #818CF8;
+  --brand-border: #1F2937;
+}
+
+@theme {
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-border: var(--brand-border);
+}
+
+body {
+  background-color: var(--brand-bg);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui;
+}
+
+/* Glassmorphism panel styling */
+.glass-panel {
+  background: rgba(11, 17, 23, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--brand-border);
+}
+
+/* Electric cyan glow */
+.cyan-glow {
+  transition: all 0.2s ease-in-out;
+}
+.cyan-glow:focus, .cyan-glow:hover {
+  outline: none;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  border-color: var(--brand-primary);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+::-webkit-scrollbar-thumb {
+  background: #1F2937;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #38BDF8;
+}
+</file>
+
+<file path="frontend/src/components/SchoolRankingTable.tsx">
+"use client";
+
+import React, { useState, useMemo } from 'react';
+import {
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  flexRender,
+  ColumnDef,
+  SortingState
+} from '@tanstack/react-table';
+import { ArrowUpDown, Search, ShieldCheck, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
+
+export interface SchoolRecord {
+  id: string;
+  school_name: string;
+  region: string;
+  country: string;
+  enrolled_students: number;
+  screening_completion: number;
+  referral_rate: number;
+  followup_completion: number;
+  primary_flag_risk: string;
+  status: string;
+}
+
+interface TableProps {
+  data: SchoolRecord[];
+}
+
+export default function SchoolRankingTable({ data }: TableProps) {
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: 'screening_completion', desc: true }
+  ]);
+  const [globalFilter, setGlobalFilter] = useState('');
+
+  const columns = useMemo<ColumnDef<SchoolRecord>[]>(
+    () => [
+      {
+        accessorKey: 'school_name',
+        header: ({ column }) => (
+          <button
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            className="flex items-center gap-1 font-mono font-bold text-gray-300 hover:text-brand-primary"
+          >
+            SCHOOL NAME <ArrowUpDown className="w-3 h-3" />
+          </button>
+        ),
+        cell: (info) => (
+          <div>
+            <div className="font-bold text-white text-xs">{info.getValue<string>()}</div>
+            <div className="text-[10px] text-gray-500 font-mono">
+              {info.row.original.region}, {info.row.original.country} ({info.row.original.enrolled_students.toLocaleString()} students)
+            </div>
+          </div>
+        )
+      },
+      {
+        accessorKey: 'screening_completion',
+        header: ({ column }) => (
+          <button
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            className="flex items-center gap-1 font-mono font-bold text-gray-300 hover:text-brand-primary"
+          >
+            SCREENING COMPL. % <ArrowUpDown className="w-3 h-3" />
+          </button>
+        ),
+        cell: (info) => {
+          const val = info.getValue<number>();
+          const color = val >= 95 ? 'text-emerald-400' : val >= 90 ? 'text-brand-primary' : 'text-amber-400';
+          return (
+            <div className="font-mono text-xs">
+              <div className={`font-bold ${color}`}>{val.toFixed(1)}%</div>
+              <div className="w-24 h-1.5 bg-brand-bg rounded-full overflow-hidden mt-1 border border-brand-border">
+                <div
+                  className={`h-full ${val >= 95 ? 'bg-emerald-500' : val >= 90 ? 'bg-brand-primary' : 'bg-amber-500'}`}
+                  style={{ width: `${Math.min(100, val)}%` }}
+                />
+              </div>
+            </div>
+          );
+        }
+      },
+      {
+        accessorKey: 'referral_rate',
+        header: ({ column }) => (
+          <button
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            className="flex items-center gap-1 font-mono font-bold text-gray-300 hover:text-brand-primary"
+          >
+            REFERRAL RATE % <ArrowUpDown className="w-3 h-3" />
+          </button>
+        ),
+        cell: (info) => (
+          <span className="font-mono text-xs font-semibold text-gray-300">
+            {info.getValue<number>().toFixed(1)}%
+          </span>
+        )
+      },
+      {
+        accessorKey: 'followup_completion',
+        header: ({ column }) => (
+          <button
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            className="flex items-center gap-1 font-mono font-bold text-gray-300 hover:text-brand-primary"
+          >
+            FOLLOW-UP COMPL. % <ArrowUpDown className="w-3 h-3" />
+          </button>
+        ),
+        cell: (info) => {
+          const val = info.getValue<number>();
+          const color = val >= 85 ? 'text-emerald-400' : val >= 70 ? 'text-brand-primary' : val >= 55 ? 'text-amber-400' : 'text-red-400';
+          return (
+            <span className={`font-mono text-xs font-bold ${color}`}>
+              {val.toFixed(1)}%
+            </span>
+          );
+        }
+      },
+      {
+        accessorKey: 'primary_flag_risk',
+        header: 'PRIMARY RISK',
+        cell: (info) => (
+          <span className="px-2 py-0.5 rounded bg-brand-surface border border-brand-border text-[10px] font-mono font-bold text-brand-secondary">
+            {info.getValue<string>()}
+          </span>
+        )
+      },
+      {
+        accessorKey: 'status',
+        header: 'COMPLIANCE STATUS',
+        cell: (info) => {
+          const status = info.getValue<string>();
+          let badgeClass = 'bg-brand-surface text-gray-400 border-brand-border';
+          let icon = <Clock className="w-3 h-3" />;
+          
+          if (status === 'Exemplary') {
+            badgeClass = 'bg-emerald-950/60 text-emerald-400 border-emerald-800/80';
+            icon = <CheckCircle2 className="w-3 h-3 text-emerald-400" />;
+          } else if (status === 'Target Met') {
+            badgeClass = 'bg-brand-primary/10 text-brand-primary border-brand-primary/40';
+            icon = <ShieldCheck className="w-3 h-3 text-brand-primary" />;
+          } else if (status === 'Follow-Up Gap') {
+            badgeClass = 'bg-amber-950/60 text-amber-400 border-amber-800/80';
+            icon = <AlertTriangle className="w-3 h-3 text-amber-400" />;
+          } else if (status === 'Action Required') {
+            badgeClass = 'bg-red-950/60 text-red-400 border-red-800/80';
+            icon = <AlertTriangle className="w-3 h-3 text-red-400" />;
+          }
+
+          return (
+            <div className={`inline-flex items-center gap-1.5 px-2 py-1 rounded border font-mono text-[10px] font-bold ${badgeClass}`}>
+              {icon}
+              <span>{status}</span>
+            </div>
+          );
+        }
+      }
+    ],
+    []
+  );
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
+      globalFilter
+    },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel()
+  });
+
+  return (
+    <div className="w-full flex flex-col h-full">
+      {/* Search Header */}
+      <div className="flex justify-between items-center mb-3">
+        <span className="text-xs font-mono text-gray-400">
+          Showing <span className="text-white font-bold">{table.getRowModel().rows.length}</span> schools
+        </span>
+        <div className="relative w-64">
+          <Search className="w-3.5 h-3.5 absolute left-2.5 top-2 text-gray-500" />
+          <input
+            type="text"
+            value={globalFilter ?? ''}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Search school or region..."
+            className="w-full pl-8 pr-3 py-1 bg-brand-bg border border-brand-border rounded text-xs font-mono text-gray-200 focus:border-brand-primary cyan-glow"
+          />
+        </div>
+      </div>
+
+      {/* Table Container */}
+      <div className="flex-1 overflow-auto border border-brand-border rounded-lg bg-brand-surface/50">
+        <table className="w-full text-left border-collapse">
+          <thead className="bg-brand-surface sticky top-0 z-10 border-b border-brand-border">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id} className="p-3 text-[11px] font-mono text-gray-400">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody className="divide-y divide-brand-border/60">
+            {table.getRowModel().rows.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length} className="text-center p-6 text-xs font-mono text-gray-500">
+                  No schools found matching search criteria.
+                </td>
+              </tr>
+            ) : (
+              table.getRowModel().rows.map((row) => (
+                <tr key={row.id} className="hover:bg-brand-surface/80 transition-colors">
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="p-3">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="frontend/.gitignore">
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+</file>
+
+<file path="frontend/AGENTS.md">
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
+</file>
+
+<file path="frontend/CLAUDE.md">
+@AGENTS.md
+</file>
+
+<file path="frontend/eslint.config.mjs">
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;
+</file>
+
+<file path="frontend/next.config.ts">
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+</file>
+
+<file path="frontend/package.json">
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@tanstack/react-table": "^8.21.3",
+    "lucide-react": "^1.25.0",
+    "next": "16.2.11",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "recharts": "^3.10.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.11",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+</file>
+
+<file path="frontend/postcss.config.mjs">
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+</file>
+
+<file path="frontend/README.md">
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</file>
+
+<file path="frontend/tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+</file>
+
+<file path="screenshots/.gitkeep">
+# Place screenshots of the running application here
+</file>
+
+<file path=".gitignore">
+# Python
+**/__pycache__/
+**/*.pyc
+backend/.venv/
+*.log
+
+# Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+.gemini/
+</file>
+
+<file path="backend/app/main.py">
+from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
+import pandas as pd
+import io
+import json
+
+from app.adapters.school_health_adapter import (
+    get_regions_summary,
+    get_screening_summary,
+    get_bmi_trends,
+    get_flag_rates,
+    get_school_rankings
+)
+from app.adapters.mock_data import SCHOOL_RANKINGS_DATA
+
+app = FastAPI(
+    title="Infocreon Internship School Health Screening API",
+    description="Backend API serving Gulf student vision, hearing, dental, and BMI screening statistics and referral completion metrics.",
+    version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/api/health")
+def health_check():
+    return {"status": "healthy", "service": "school-health-screening-backend"}
+
+@app.get("/api/regions")
+def get_regions():
+    return get_regions_summary()
+
+@app.get("/api/screening-summary")
+def screening_summary(region: str = Query(None, description="Optional region/emirate filter")):
+    return get_screening_summary(region=region)
+
+@app.get("/api/bmi-trends")
+def bmi_trends():
+    return get_bmi_trends()
+
+@app.get("/api/flag-rates")
+def flag_rates():
+    return get_flag_rates()
+
+@app.get("/api/school-rankings")
+def school_rankings(
+    region: str = Query(None, description="Region filter"),
+    min_completion: float = Query(0.0, description="Minimum completion rate %")
+):
+    return get_school_rankings(region=region, min_completion=min_completion)
+
+@app.get("/api/download")
+def download_data(format: str = "csv"):
+    df = pd.DataFrame(SCHOOL_RANKINGS_DATA)
+    
+    if format.lower() == "json":
+        json_buffer = io.StringIO()
+        df.to_json(json_buffer, orient="records", indent=2)
+        json_buffer.seek(0)
+        return StreamingResponse(
+            io.BytesIO(json_buffer.getvalue().encode()),
+            media_type="application/json",
+            headers={"Content-Disposition": "attachment; filename=school_health_screening_data.json"}
+        )
+        
+    csv_buffer = io.StringIO()
+    df.to_csv(csv_buffer, index=False)
+    csv_buffer.seek(0)
+    return StreamingResponse(
+        io.BytesIO(csv_buffer.getvalue().encode()),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=school_health_screening_data.csv"}
+    )
+</file>
+
+<file path="frontend/src/app/layout.tsx">
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "School Health Screening Dashboard | Infocreon Internship",
+  description: "Student vision, hearing, dental, and BMI screening coverage across Gulf school systems. Real-time screening coverage gauges, referral-to-treatment funnels, BMI age cohort trends, and school rankings.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      style={{ colorScheme: 'dark' }}
+    >
+      <body className="min-h-full bg-brand-bg text-gray-100 flex flex-col font-sans overflow-hidden">
+        {children}
+      </body>
+    </html>
+  );
+}
+</file>
+
+<file path="UAT_CHECKLIST.md">
+# User Acceptance Testing (UAT) Checklist - School Health Screening Dashboard
+
+**Program**: Infocreon Internship (PoC #40)  
+**Developer**: Awaaz Muhammed ([@Awaaz-123](https://github.com/Awaaz-123))  
+**PoC ID**: 40  
+**PoC Title**: School Health Screening Dashboard  
+**Status**: **100% PASS**  
+
+---
+
+## 📋 Functional Verification Checklist
+
+| Test Case ID | Test Case | Expected Result | Actual Result / Evidence | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **UAT-001** | **Click & Open Intelligence Layer** | Clicking the "INTELLIGENCE LAYER" button in the header slides open the right-side panel with backdrop blur. | Intelligence Layer panel slides open smoothly with close button, metrics, governance panels, and data exporters. | **PASS** |
+| **UAT-002** | **100% Main Stage Layout** | Closing the Intelligence Layer restores the main dashboard to 100% full screen width. | Gauges, referral funnels, flag bars, and TanStack Table scale to 100% screen width seamlessly. | **PASS** |
+| **UAT-003** | **Developer Signature Display** | Developer signature is displayed prominently in the header bar, footer, and Intelligence Layer drawer. | Shows `Developed by Awaaz Muhammed | GitHub: @Awaaz-123 | Infocreon Internship` across viewports. | **PASS** |
+| **UAT-004** | **Filter Logic (Region Toggle)** | Selecting "ALL REGIONS" or a specific region (e.g. Dubai, Riyadh, Abu Dhabi) filters the school ranking table and funnel statistics. | School ranking table and Intelligence Layer panels update to display region-specific statistics. | **PASS** |
+| **UAT-005** | **Filter Logic (Min Completion Slider)** | Dragging the minimum completion rate % slider filters out schools below that threshold. | TanStack Table updates instantly to show only compliant schools meeting the threshold. | **PASS** |
+| **UAT-006** | **TanStack Table Sorting & Search** | Clicking headers or typing in the search box filters and sorts table rows in real time. | Table rows reorder and filter dynamically with zero latency. | **PASS** |
+| **UAT-007** | **Data Exporter Check** | Clicking "CSV DATA" or "JSON DATA" buttons in the Intelligence Layer downloads raw data files. | Browser downloads `school_health_screening_data.csv` or `school_health_screening_data.json`. | **PASS** |
+| **UAT-008** | **Production Build Verification** | Run `npm run lint` and `npm run build` in the frontend. | Production build compiles with 0 errors. | **PASS** |
+</file>
+
+<file path="VAR_REPORT.md">
+# Visualization Audit Report (VAR) - School Health Screening Dashboard
+
+**Program**: Infocreon Internship (PoC #40)  
+**Developer Signature**: Awaaz Muhammed ([@Awaaz-123](https://github.com/Awaaz-123))  
+**PoC ID**: 40  
+**PoC Title**: School Health Screening Dashboard  
+**Status**: **PASS** (100% Compliance with Infocreon Internship System Standards)
+
+---
+
+## 📐 Design System & Layout Verification
+
+| Audit Point | Requirements | Current Implementation | Status |
+| :--- | :--- | :--- | :--- |
+| **Program Title** | Infocreon Internship | Updated titles, headers, badges, and metadata across frontend, backend, and documentation | **PASS** |
+| **Developer Signature** | Awaaz Muhammed (@Awaaz-123) | Rendered in top header bar, main stage footer bar, and bottom of Intelligence Layer drawer | **PASS** |
+| **Full-Width View** | 100% Main Stage Layout | Main stage spans `w-full` (100%) with regional gauges, referral funnels, flag bars, and TanStack Table | **PASS** |
+| **Intelligence Layer** | Click & Open Slide-Over Drawer | Trigger button in header slides open right-side drawer with KPIs, governance panels, filters, and exporters | **PASS** |
+| **Obsidian Theme** | Background strictly `#030712` | Root body background and container CSS variables configured to strictly `#030712` | **PASS** |
+| **Card Surfaces** | Card surfaces strictly `#0B1117` | Card panels, gauges, and table backgrounds set to `--color-brand-surface: #0B1117` | **PASS** |
+| **Borders** | Borders strictly `#1F2937`, 1px width | Container borders use `border-brand-border` (`#1F2937`) | **PASS** |
+| **Accent Primary** | `#38BDF8` (Electric Cyan) for active states | Interactive gauges, selected regional cards, table headers, and active buttons use `#38BDF8` | **PASS** |
+| **Accent Secondary** | `#818CF8` (Indigo) for secondary metrics | Secondary chart series, flag-rate bars, and density slider tracks use `#818CF8` | **PASS** |
+| **Typography** | Inter / Geist font with tight spacing | Root Next.js layout configures `Geist` and `Geist Mono` font variables with tracking-tight classes | **PASS** |
+
+---
+
+## 🔍 Detailed Audit & Findings
+
+### 1. 100% Full-Width Layout & Click & Open Drawer
+- **Analysis**: The 70/30 fixed split view was replaced by a clean, 100% full-width Main Stage. Clicking the "INTELLIGENCE LAYER" button smoothly opens the slide-over drawer with backdrop blur, giving users total control over dashboard focus and analytical depth.
+- **Outcome**: **PASS**
+
+### 2. Developer Signature & Program Branding
+- **Analysis**: Verified developer attribution (`Awaaz Muhammed | GitHub: @Awaaz-123`) and Infocreon Internship branding across application views.
+- **Outcome**: **PASS**
+</file>
+
+<file path="frontend/src/app/page.tsx">
+"use client";
+
+import React, { useEffect, useState, useMemo } from 'react';
+import { 
+  Activity, 
+  Download, 
+  Sliders, 
+  Building, 
+  RefreshCw, 
+  Info,
+  CheckCircle2,
+  Stethoscope,
+  TrendingUp,
+  Award,
+  Filter,
+  Sparkles,
+  X,
+  User
+} from 'lucide-react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as ChartTooltip,
+  ResponsiveContainer,
+  Legend,
+  Cell
+} from 'recharts';
+
+import SchoolRankingTable, { SchoolRecord } from '@/components/SchoolRankingTable';
+
+interface RegionSummary {
+  region: string;
+  country: string;
+  total_schools: number;
+  target_students: number;
+  screened_students: number;
+  completion_rate: number;
+  why_it_matters: string;
+  power_dynamics: string;
+}
+
+interface FunnelStage {
+  stage: string;
+  count: number;
+  percentage: number;
+  fill: string;
+}
+
+interface ScreeningSummaryData {
+  target_students: number;
+  screened_students: number;
+  completion_rate: number;
+  why_it_matters: string;
+  power_dynamics: string;
+  funnel_stages: FunnelStage[];
+}
+
+interface FlagRateRecord {
+  grade: string;
+  age: number;
+  vision_flag: number;
+  hearing_flag: number;
+  dental_flag: number;
+  bmi_flag: number;
+}
+
+// Fallback datasets for offline mode
+const MOCK_REGIONS: RegionSummary[] = [
+  { region: "Dubai", country: "UAE", total_schools: 220, target_students: 310000, screened_students: 288300, completion_rate: 93.0, why_it_matters: "High-density private and public school network with mandated annual screening; tracking follow-through ensures early detection of refractive vision errors and childhood caries before academic performance suffers.", power_dynamics: "Joint oversight between Dubai Health Authority (DHA) and Knowledge and Human Development Authority (KHDA) requires aligned protocols between health regulators and private school operators." },
+  { region: "Abu Dhabi", country: "UAE", total_schools: 260, target_students: 380000, screened_students: 349600, completion_rate: 92.0, why_it_matters: "Extensive screening across urban centers and Al Ain / Al Dhafra regions; critical for detecting early hearing deficits and metabolic risks in younger cohorts.", power_dynamics: "Department of Health Abu Dhabi (DoH) mandates strict EMR integration for school clinics, placing compliance responsibility directly on licensed school nurses." },
+  { region: "Sharjah", country: "UAE", total_schools: 140, target_students: 185000, screened_students: 160950, completion_rate: 87.0, why_it_matters: "Rapidly growing student population; identifying referral drop-offs between primary school screenings and secondary care prevents irreversible vision loss.", power_dynamics: "Ministry of Health and Prevention (MOHAP) coordinates screening alongside Sharjah Private Education Authority (SPEA)." },
+  { region: "Riyadh", country: "Saudi Arabia", total_schools: 480, target_students: 620000, screened_students: 545600, completion_rate: 88.0, why_it_matters: "Massive student volume; early BMI screening and dental interventions address rising childhood obesity and oral health burdens across the central region.", power_dynamics: "Saudi Ministry of Health (MOH) and Ministry of Education (MOE) co-manage the National School Health Program, navigating cross-ministerial referral pipelines." },
+  { region: "Makkah & Jeddah", country: "Saudi Arabia", total_schools: 410, target_students: 540000, screened_students: 459000, completion_rate: 85.0, why_it_matters: "Diverse socio-demographic student body; robust vision screening catches amblyopia early when corrective intervention is most cost-effective.", power_dynamics: "Regional Health Clusters drive clinical referrals while school principals control access to physical screening days." },
+  { region: "Eastern Province", country: "Saudi Arabia", total_schools: 310, target_students: 410000, screened_students: 364900, completion_rate: 89.0, why_it_matters: "Industrial and coastal corridor; tracking referral-to-treatment loops guarantees students flagged for hearing loss receive specialized audiometry.", power_dynamics: "School health units rely on primary healthcare center (PHCC) capacity to process student referrals promptly." }
+];
+
+const MOCK_FUNNEL: FunnelStage[] = [
+  { stage: "Target Students", count: 2445000, percentage: 100.0, fill: "#38BDF8" },
+  { stage: "Screened", count: 2168350, percentage: 88.7, fill: "#818CF8" },
+  { stage: "Flagged Risk", count: 390300, percentage: 18.0, fill: "#F59E0B" },
+  { stage: "Referred", count: 321500, percentage: 82.4, fill: "#EC4899" },
+  { stage: "Treated", count: 218620, percentage: 68.0, fill: "#10B981" }
+];
+
+const MOCK_FLAG_RATES: FlagRateRecord[] = [
+  { grade: "Grade 1", age: 6, vision_flag: 6.2, hearing_flag: 3.1, dental_flag: 24.5, bmi_flag: 14.2 },
+  { grade: "Grade 2", age: 7, vision_flag: 7.4, hearing_flag: 2.8, dental_flag: 26.1, bmi_flag: 15.8 },
+  { grade: "Grade 3", age: 8, vision_flag: 8.9, hearing_flag: 2.5, dental_flag: 28.4, bmi_flag: 17.5 },
+  { grade: "Grade 4", age: 9, vision_flag: 10.5, hearing_flag: 2.3, dental_flag: 30.2, bmi_flag: 19.1 },
+  { grade: "Grade 5", age: 10, vision_flag: 12.1, hearing_flag: 2.1, dental_flag: 31.8, bmi_flag: 21.4 },
+  { grade: "Grade 6", age: 11, vision_flag: 13.8, hearing_flag: 2.0, dental_flag: 29.5, bmi_flag: 23.8 },
+  { grade: "Grade 7", age: 12, vision_flag: 15.6, hearing_flag: 1.9, dental_flag: 27.2, bmi_flag: 25.6 },
+  { grade: "Grade 8", age: 13, vision_flag: 17.2, hearing_flag: 1.8, dental_flag: 25.0, bmi_flag: 27.2 },
+  { grade: "Grade 9", age: 14, vision_flag: 18.9, hearing_flag: 1.7, dental_flag: 23.4, bmi_flag: 28.9 },
+  { grade: "Grade 10", age: 15, vision_flag: 20.4, hearing_flag: 1.6, dental_flag: 22.1, bmi_flag: 30.1 },
+  { grade: "Grade 11", age: 16, vision_flag: 21.8, hearing_flag: 1.5, dental_flag: 20.8, bmi_flag: 31.5 },
+  { grade: "Grade 12", age: 17, vision_flag: 23.1, hearing_flag: 1.4, dental_flag: 19.5, bmi_flag: 32.8 }
+];
+
+const MOCK_SCHOOL_RANKINGS: SchoolRecord[] = [
+  { id: "SCH-101", school_name: "Dubai International Academy", region: "Dubai", country: "UAE", enrolled_students: 2450, screening_completion: 98.4, referral_rate: 14.2, followup_completion: 91.5, primary_flag_risk: "Vision", status: "Exemplary" },
+  { id: "SCH-102", school_name: "Al Yasmina Academy", region: "Abu Dhabi", country: "UAE", enrolled_students: 1980, screening_completion: 96.2, referral_rate: 16.8, followup_completion: 88.0, primary_flag_risk: "BMI", status: "Exemplary" },
+  { id: "SCH-103", school_name: "Riyadh Educational Complex", region: "Riyadh", country: "Saudi Arabia", enrolled_students: 3200, screening_completion: 94.1, referral_rate: 19.5, followup_completion: 74.2, primary_flag_risk: "Dental", status: "Target Met" },
+  { id: "SCH-104", school_name: "Sharjah Model School", region: "Sharjah", country: "UAE", enrolled_students: 1450, screening_completion: 91.0, referral_rate: 18.0, followup_completion: 69.5, primary_flag_risk: "Dental", status: "Target Met" },
+  { id: "SCH-105", school_name: "Jeddah Knowledge International", region: "Makkah & Jeddah", country: "Saudi Arabia", enrolled_students: 2100, screening_completion: 89.5, referral_rate: 21.4, followup_completion: 62.0, primary_flag_risk: "Vision", status: "Follow-Up Gap" },
+  { id: "SCH-106", school_name: "Dhahran Ahliyyah Schools", region: "Eastern Province", country: "Saudi Arabia", enrolled_students: 2800, screening_completion: 95.8, referral_rate: 15.3, followup_completion: 84.6, primary_flag_risk: "Hearing", status: "Exemplary" },
+  { id: "SCH-107", school_name: "Emirates National School", region: "Abu Dhabi", country: "UAE", enrolled_students: 3100, screening_completion: 93.5, referral_rate: 17.1, followup_completion: 81.2, primary_flag_risk: "BMI", status: "Target Met" },
+  { id: "SCH-108", school_name: "Al Khobar Secondary Academy", region: "Eastern Province", country: "Saudi Arabia", enrolled_students: 1650, screening_completion: 86.4, referral_rate: 22.8, followup_completion: 58.4, primary_flag_risk: "Vision", status: "Follow-Up Gap" },
+  { id: "SCH-109", school_name: "GEMS World Academy", region: "Dubai", country: "UAE", enrolled_students: 2300, screening_completion: 97.1, referral_rate: 13.9, followup_completion: 94.0, primary_flag_risk: "Vision", status: "Exemplary" },
+  { id: "SCH-110", school_name: "Al Falah Secondary School", region: "Makkah & Jeddah", country: "Saudi Arabia", enrolled_students: 1890, screening_completion: 81.2, referral_rate: 24.5, followup_completion: 51.0, primary_flag_risk: "Dental", status: "Action Required" }
+];
+
+export default function Home() {
+  const [regions, setRegions] = useState<RegionSummary[]>([]);
+  const [summaryData, setSummaryData] = useState<ScreeningSummaryData | null>(null);
+  const [flagRates, setFlagRates] = useState<FlagRateRecord[]>([]);
+  const [schoolRankings, setSchoolRankings] = useState<SchoolRecord[]>([]);
+  
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+  const [minCompletionFilter, setMinCompletionFilter] = useState<number>(0);
+  const [backendStatus, setBackendStatus] = useState<'online' | 'fallback'>('fallback');
+  const [loading, setLoading] = useState<boolean>(true);
+  
+  // Click & Open Intelligence Layer State
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+
+  const API_BASE = "http://localhost:8082/api";
+
+  useEffect(() => {
+    async function loadDashboardData() {
+      setLoading(true);
+      try {
+        const healthRes = await fetch(`${API_BASE}/health`, { mode: 'cors' });
+        if (healthRes.ok) {
+          setBackendStatus('online');
+          
+          const [regRes, sumRes, flagRes, rankRes] = await Promise.all([
+            fetch(`${API_BASE}/regions`, { mode: 'cors' }),
+            fetch(`${API_BASE}/screening-summary${selectedRegion ? `?region=${encodeURIComponent(selectedRegion)}` : ''}`, { mode: 'cors' }),
+            fetch(`${API_BASE}/flag-rates`, { mode: 'cors' }),
+            fetch(`${API_BASE}/school-rankings${selectedRegion ? `?region=${encodeURIComponent(selectedRegion)}` : ''}`, { mode: 'cors' })
+          ]);
+
+          const regionsData = await regRes.json();
+          const summaryJson = await sumRes.json();
+          const flagJson = await flagRes.json();
+          const rankJson = await rankRes.json();
+
+          setRegions(regionsData);
+          setSummaryData(summaryJson);
+          setFlagRates(flagJson);
+          setSchoolRankings(rankJson);
+        } else {
+          throw new Error("Backend not healthy");
+        }
+      } catch (err) {
+        console.warn("Backend API offline. Using local frontend fallback mode.", err);
+        setBackendStatus('fallback');
+        setRegions(MOCK_REGIONS);
+        setFlagRates(MOCK_FLAG_RATES);
+        setSchoolRankings(MOCK_SCHOOL_RANKINGS);
+        setSummaryData({
+          target_students: 2445000,
+          screened_students: 2168350,
+          completion_rate: 88.7,
+          why_it_matters: "School screening is the earliest, cheapest point to catch treatable conditions — this shows education and health ministries where coverage and follow-through are breaking down.",
+          power_dynamics: "Joint governance between Ministries of Education (access to schools) and Ministries of Health (clinical protocols and referral pathways) creates bureaucratic friction, determining whether identified student health conditions lead to timely clinical care or die in referral backlogs.",
+          funnel_stages: MOCK_FUNNEL
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadDashboardData();
+  }, [selectedRegion]);
+
+  // Filter school rankings by minCompletionFilter
+  const filteredSchoolRankings = useMemo(() => {
+    let result = schoolRankings;
+    if (selectedRegion) {
+      result = result.filter(s => s.region === selectedRegion);
+    }
+    return result.filter(s => s.screening_completion >= minCompletionFilter);
+  }, [schoolRankings, selectedRegion, minCompletionFilter]);
+
+  // Active region details
+  const activeRegionMeta = useMemo(() => {
+    if (selectedRegion && regions.length > 0) {
+      return regions.find(r => r.region === selectedRegion) || null;
+    }
+    return null;
+  }, [regions, selectedRegion]);
+
+  // Handle Download CSV/JSON
+  const handleDownload = (format: 'csv' | 'json') => {
+    if (backendStatus === 'online') {
+      window.open(`${API_BASE}/download?format=${format}`);
+    } else {
+      const content = format === 'csv'
+        ? [
+            ["School ID", "School Name", "Region", "Country", "Students Enrolled", "Screening %", "Referral %", "Followup %", "Primary Risk", "Status"].join(','),
+            ...schoolRankings.map(s => [s.id, `"${s.school_name}"`, s.region, s.country, s.enrolled_students, s.screening_completion, s.referral_rate, s.followup_completion, s.primary_flag_risk, s.status].join(','))
+          ].join('\n')
+        : JSON.stringify(schoolRankings, null, 2);
+
+      const blob = new Blob([content], { type: format === 'csv' ? 'text/csv' : 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `school_health_screening_data.${format}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
+  return (
+    <div className="flex h-screen w-screen overflow-hidden bg-brand-bg text-gray-200 font-sans relative">
+      
+      {/* ========================================================================= */}
+      {/* 100% FULL-WIDTH MAIN STAGE */}
+      {/* ========================================================================= */}
+      <main className="w-full h-full flex flex-col p-6 gap-4 overflow-hidden">
+        
+        {/* Top Header Bar with Developer Signature & Intelligence Layer Open Trigger */}
+        <div className="flex items-center justify-between bg-brand-surface/60 border border-brand-border px-5 py-3 rounded-lg backdrop-blur-md">
+          
+          {/* Left Title & Internship Badge */}
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-brand-primary/10 border border-brand-primary/30">
+              <Activity className="w-5 h-5 text-brand-primary" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg font-black tracking-tight text-white uppercase leading-tight font-sans">
+                  School Health Screening Dashboard
+                </h1>
+                <span className="px-2.5 py-0.5 rounded-full bg-brand-primary/10 border border-brand-primary/40 text-[10px] font-mono font-bold text-brand-primary uppercase">
+                  Infocreon Internship PoC #40
+                </span>
+              </div>
+              <p className="text-[11px] text-gray-400 font-mono mt-0.5">
+                Gulf Student Vision, Hearing, Dental & BMI Screening Intelligence
+              </p>
+            </div>
+          </div>
+
+          {/* Center: Developer Signature */}
+          <div className="hidden lg:flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-brand-surface border border-brand-border text-xs font-mono">
+            <User className="w-3.5 h-3.5 text-brand-primary" />
+            <span className="text-gray-400">Developer:</span>
+            <span className="text-white font-bold">Awaaz Muhammed</span>
+            <span className="text-gray-600">|</span>
+            <span className="text-brand-secondary font-bold">GitHub: @Awaaz-123</span>
+          </div>
+
+          {/* Right Controls: Mode Status & Click & Open Intelligence Layer Button */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-brand-bg border border-brand-border text-[10px] font-mono">
+              <span className={`w-2 h-2 rounded-full ${backendStatus === 'online' ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`} />
+              <span className="text-gray-300 font-semibold capitalize">{backendStatus} mode</span>
+            </div>
+
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-primary/10 hover:bg-brand-primary/20 border border-brand-primary/60 text-brand-primary text-xs font-bold font-mono transition-all cyan-glow shadow-[0_0_12px_rgba(56,189,248,0.2)]"
+            >
+              <Sparkles className="w-4 h-4 animate-pulse text-brand-primary" />
+              <span>INTELLIGENCE LAYER</span>
+              <Sliders className="w-3.5 h-3.5 text-brand-secondary ml-1" />
+            </button>
+          </div>
+
+        </div>
+
+        {/* Section 1: Regional Screening Gauges */}
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between items-center px-1">
+            <h2 className="text-xs font-bold tracking-wider text-white uppercase font-mono flex items-center gap-1.5">
+              <Award className="w-4 h-4 text-brand-primary" /> Regional Screening-Coverage Completion Gauges
+            </h2>
+            <div className="flex items-center gap-3">
+              {selectedRegion && (
+                <button
+                  onClick={() => setSelectedRegion(null)}
+                  className="text-[10px] font-mono text-brand-primary hover:underline font-bold"
+                >
+                  Clear Region Filter ({selectedRegion})
+                </button>
+              )}
+              <span className="text-[10px] font-mono text-gray-500">WHO & Gulf MOE Benchmarks</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-6 gap-3">
+            {regions.map((reg) => {
+              const isSelected = selectedRegion === reg.region;
+              return (
+                <div
+                  key={reg.region}
+                  onClick={() => setSelectedRegion(isSelected ? null : reg.region)}
+                  className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 flex flex-col justify-between ${
+                    isSelected
+                      ? 'bg-brand-primary/10 border-brand-primary shadow-[0_0_12px_rgba(56,189,248,0.25)]'
+                      : 'bg-brand-surface/60 border-brand-border hover:border-gray-600'
+                  }`}
+                >
+                  <div className="text-[10px] font-mono text-gray-400 font-bold truncate">{reg.region}</div>
+                  <div className="text-xl font-black font-mono text-white mt-1">
+                    {reg.completion_rate}%
+                  </div>
+                  <div className="w-full h-1.5 bg-brand-bg rounded-full overflow-hidden mt-2 border border-brand-border">
+                    <div
+                      className={`h-full ${reg.completion_rate >= 90 ? 'bg-emerald-500' : 'bg-brand-primary'}`}
+                      style={{ width: `${reg.completion_rate}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Section 2: Referral Funnel (Left) + Vision/Dental Flag-Rates (Right) */}
+        <div className="h-[40%] w-full flex gap-4 overflow-hidden">
+          
+          {/* Referral-to-Treatment Funnel */}
+          <div className="w-1/2 h-full bg-brand-surface/30 border border-brand-border rounded-lg p-4 flex flex-col">
+            <div className="flex items-center justify-between mb-2 border-b border-brand-border pb-2">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <Stethoscope className="w-4 h-4 text-brand-primary" /> Referral-to-Treatment Funnel
+              </h3>
+              <span className="text-[9px] font-mono text-gray-400">Identification → Clinical Care</span>
+            </div>
+
+            <div className="flex-1 w-full text-[10px] font-mono">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={summaryData?.funnel_stages || MOCK_FUNNEL} layout="vertical" margin={{ left: 10, right: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" opacity={0.4} />
+                  <XAxis type="number" stroke="#9CA3AF" />
+                  <YAxis dataKey="stage" type="category" stroke="#9CA3AF" width={110} />
+                  <ChartTooltip
+                    contentStyle={{ backgroundColor: '#0B1117', borderColor: '#1F2937' }}
+                    itemStyle={{ color: '#f3f4f6' }}
+                    formatter={(value: unknown) => [`${Number(value).toLocaleString()} students`, 'Volume']}
+                  />
+                  <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                    {(summaryData?.funnel_stages || MOCK_FUNNEL).map((entry, index) => (
+                      <Cell key={`funnel-cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Vision/Hearing Flag Rates by Grade */}
+          <div className="w-1/2 h-full bg-brand-surface/30 border border-brand-border rounded-lg p-4 flex flex-col">
+            <div className="flex items-center justify-between mb-2 border-b border-brand-border pb-2">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <TrendingUp className="w-4 h-4 text-brand-secondary" /> Vision vs Dental Flag-Rate by Grade
+              </h3>
+              <span className="text-[9px] font-mono text-gray-400">% Identified</span>
+            </div>
+
+            <div className="flex-1 w-full text-[10px] font-mono">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={flagRates}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" opacity={0.4} />
+                  <XAxis dataKey="grade" stroke="#9CA3AF" />
+                  <YAxis stroke="#9CA3AF" />
+                  <ChartTooltip
+                    contentStyle={{ backgroundColor: '#0B1117', borderColor: '#1F2937' }}
+                    itemStyle={{ color: '#f3f4f6' }}
+                  />
+                  <Legend verticalAlign="top" height={24} />
+                  <Bar dataKey="vision_flag" name="Vision Flag %" fill="#38BDF8" radius={[2, 2, 0, 0]} />
+                  <Bar dataKey="dental_flag" name="Dental Flag %" fill="#818CF8" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Section 3: TanStack School Ranking Table */}
+        <div className="flex-1 w-full bg-brand-surface/20 border border-brand-border rounded-lg p-4 flex flex-col overflow-hidden">
+          <div className="flex items-center justify-between mb-2 pb-2 border-b border-brand-border">
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <Activity className="w-4 h-4 text-brand-primary" /> School-Level Screening Completion & Follow-up Rankings
+            </h3>
+            <span className="text-[9px] font-mono text-gray-400">Interactive Sorting & Filtering</span>
+          </div>
+
+          <div className="flex-1 overflow-hidden">
+            {loading ? (
+              <div className="w-full h-full flex flex-col items-center justify-center bg-brand-surface/40">
+                <RefreshCw className="w-8 h-8 text-brand-primary animate-spin mb-2" />
+                <span className="text-sm font-mono text-gray-400">Loading School Performance Data...</span>
+              </div>
+            ) : (
+              <SchoolRankingTable data={filteredSchoolRankings} />
+            )}
+          </div>
+        </div>
+
+        {/* Bottom Footer Bar with Developer Signature */}
+        <div className="flex items-center justify-between text-[11px] font-mono text-gray-400 pt-1 border-t border-brand-border/60">
+          <div className="flex items-center gap-2">
+            <span className="text-white font-bold">Infocreon Internship PoC #40</span>
+            <span className="text-gray-600">|</span>
+            <span>Developed by <strong className="text-brand-primary font-bold">Awaaz Muhammed</strong></span>
+            <span className="text-gray-600">|</span>
+            <span className="text-brand-secondary font-bold">GitHub: @Awaaz-123</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span>Next.js Frontend :3002</span>
+            <span>FastAPI Backend :8082</span>
+          </div>
+        </div>
+
+      </main>
+
+      {/* ========================================================================= */}
+      {/* CLICK & OPEN INTELLIGENCE LAYER DRAWER */}
+      {/* ========================================================================= */}
+
+      {/* Dark Backdrop Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] transition-opacity duration-300"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Slide-Over Drawer */}
+      <aside 
+        className={`fixed top-0 right-0 w-[440px] max-w-full h-full bg-brand-surface/95 border-l border-brand-border backdrop-blur-xl z-[10000] p-6 flex flex-col overflow-y-auto shadow-2xl transition-transform duration-300 ease-in-out ${
+          sidebarOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        
+        {/* Intelligence Layer Header */}
+        <div className="flex items-center justify-between pb-4 border-b border-brand-border mb-5">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-brand-primary" />
+            <div>
+              <h2 className="text-base font-black tracking-tight text-white uppercase leading-tight font-sans">
+                Intelligence Layer & Controls
+              </h2>
+              <span className="text-[10px] tracking-widest font-mono text-brand-primary uppercase font-bold">
+                Infocreon Internship PoC #40
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="p-1.5 rounded-lg bg-brand-bg hover:bg-brand-border border border-brand-border text-gray-400 hover:text-white transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* High-Level Metric Card */}
+        <div className="mb-5 p-4 rounded-lg bg-brand-bg/80 border border-brand-border relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-brand-primary/5 rounded-full blur-2xl group-hover:bg-brand-primary/10 transition-all duration-300" />
+          <span className="text-[10px] tracking-wider font-mono text-gray-400 uppercase">
+            {selectedRegion ? `REGION: ${selectedRegion.toUpperCase()}` : 'ALL GULF REGIONS OVERALL'}
+          </span>
+          <div className="flex items-baseline justify-between mt-1">
+            <span className="text-3xl font-black font-mono text-brand-primary">
+              {summaryData?.completion_rate || 88.7}%
+            </span>
+            <span className="text-xs font-mono text-emerald-400 font-bold flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Target Met
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-brand-border/60 text-xs">
+            <div>
+              <span className="text-[10px] text-gray-400 font-mono uppercase block">Target Students</span>
+              <span className="font-mono font-bold text-white">
+                {(summaryData?.target_students || 2445000).toLocaleString()}
+              </span>
+            </div>
+            <div>
+              <span className="text-[10px] text-gray-400 font-mono uppercase block">Screened Students</span>
+              <span className="font-mono font-bold text-brand-secondary">
+                {(summaryData?.screened_students || 2168350).toLocaleString()}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Section B: Why This Matters */}
+        <section className="mb-5 p-4 rounded-lg bg-brand-bg/40 border border-brand-border">
+          <h3 className="text-xs font-bold tracking-wider text-brand-primary uppercase mb-1.5 flex items-center gap-1.5">
+            <Info className="w-3.5 h-3.5" /> WHY THIS MATTERS
+          </h3>
+          <p className="text-xs text-gray-300 leading-relaxed font-sans">
+            {activeRegionMeta?.why_it_matters || summaryData?.why_it_matters}
+          </p>
+        </section>
+
+        {/* Section C: Who Controls the Rail */}
+        <section className="mb-5 p-4 rounded-lg bg-brand-bg/40 border border-brand-border">
+          <h3 className="text-xs font-bold tracking-wider text-brand-secondary uppercase mb-1.5 flex items-center gap-1.5">
+            <Building className="w-3.5 h-3.5" /> WHO CONTROLS THE RAIL
+          </h3>
+          <p className="text-xs text-gray-300 leading-relaxed font-sans">
+            {activeRegionMeta?.power_dynamics || summaryData?.power_dynamics}
+          </p>
+        </section>
+
+        {/* Section D: Dynamic Filters */}
+        <section className="mb-6 flex-1 flex flex-col gap-4">
+          <div>
+            <h3 className="text-xs font-bold tracking-wider text-white uppercase mb-2 flex items-center gap-1.5">
+              <Filter className="w-3.5 h-3.5 text-brand-primary" /> Filter by Region / Emirate
+            </h3>
+            <div className="grid grid-cols-2 gap-1.5 text-[10px] font-mono">
+              <button
+                onClick={() => setSelectedRegion(null)}
+                className={`py-1.5 px-2 rounded border text-left font-bold transition-all ${
+                  selectedRegion === null
+                    ? 'bg-brand-primary/10 border-brand-primary text-brand-primary'
+                    : 'bg-brand-bg border-brand-border text-gray-400 hover:border-gray-700'
+                }`}
+              >
+                ALL REGIONS
+              </button>
+              {regions.map(r => (
+                <button
+                  key={r.region}
+                  onClick={() => setSelectedRegion(r.region)}
+                  className={`py-1.5 px-2 rounded border text-left font-bold transition-all truncate ${
+                    selectedRegion === r.region
+                      ? 'bg-brand-primary/10 border-brand-primary text-brand-primary'
+                      : 'bg-brand-bg border-brand-border text-gray-400 hover:border-gray-700'
+                  }`}
+                >
+                  {r.region.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Min Completion Threshold Filter */}
+          <div>
+            <div className="flex justify-between items-center mb-1">
+              <h3 className="text-xs font-bold tracking-wider text-white uppercase flex items-center gap-1.5">
+                <Sliders className="w-3.5 h-3.5 text-brand-secondary" /> Min Completion Rate
+              </h3>
+              <span className="text-[10px] font-mono text-brand-secondary font-bold">
+                {minCompletionFilter}%
+              </span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="95"
+              step="5"
+              value={minCompletionFilter}
+              onChange={(e) => setMinCompletionFilter(Number(e.target.value))}
+              className="w-full h-1 bg-brand-border rounded-lg appearance-none cursor-pointer accent-brand-secondary focus:outline-none"
+            />
+          </div>
+        </section>
+
+        {/* Section E: Download Sample Data */}
+        <div className="mb-6 flex gap-2">
+          <button
+            onClick={() => handleDownload('csv')}
+            className="flex-1 py-2 px-3 bg-brand-primary text-brand-bg hover:bg-brand-primary/90 border border-brand-primary text-xs font-bold font-mono rounded-lg flex items-center justify-center gap-1.5 transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" /> CSV DATA
+          </button>
+          <button
+            onClick={() => handleDownload('json')}
+            className="flex-1 py-2 px-3 bg-brand-bg hover:bg-brand-border border border-brand-border text-gray-300 hover:text-white text-xs font-bold font-mono rounded-lg flex items-center justify-center gap-1.5 transition-colors"
+          >
+            <Download className="w-3.5 h-3.5 text-brand-secondary" /> JSON DATA
+          </button>
+        </div>
+
+        {/* Section F: Developer Signature Footer Card */}
+        <div className="mt-auto p-4 rounded-lg bg-brand-bg/80 border border-brand-border text-xs font-mono">
+          <div className="flex items-center gap-2 mb-1.5">
+            <User className="w-4 h-4 text-brand-primary" />
+            <span className="text-white font-bold">Developer Signature</span>
+          </div>
+          <div className="text-[11px] text-gray-300 space-y-1 pl-6">
+            <div>Developer: <strong className="text-brand-primary">Awaaz Muhammed</strong></div>
+            <div>GitHub: <strong className="text-brand-secondary">@Awaaz-123</strong></div>
+            <div>Program: <strong className="text-emerald-400">Infocreon Internship</strong></div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  );
+}
+</file>
+
+<file path="README.md">
+# POC-40-SchoolHealthScreeningDashboard-Awaaz
+
+School Health Screening Dashboard is a high-performance healthcare intelligence platform built for the **Infocreon Internship (PoC #40)**. It maps student vision, hearing, dental, and BMI screening coverage across Gulf school systems (UAE and Saudi Arabia) and tracks the referral-to-treatment follow-up loop.
+
+---
+
+## 👨‍💻 Developer Signature
+- **Developer**: **Awaaz Muhammed**
+- **GitHub Username**: [@Awaaz-123](https://github.com/Awaaz-123)
+- **Program**: **Infocreon Internship (PoC #40)**
+
+---
+
+## 📖 Project Overview
+The **School Health Screening Dashboard** synthesizes screening data across regional school districts (Dubai, Abu Dhabi, Sharjah, Riyadh, Makkah & Jeddah, Eastern Province) to give education and health authorities real-time visibility into student wellness programs. It monitors screening completion rates, flags early physical health risks (vision impairment, dental caries, hearing deficits, and childhood obesity trends), and tracks clinical referral follow-through.
+
+## ⚠️ Problem Statement
+School health screening is the earliest and most cost-effective entry point to catch treatable pediatric conditions before they impair academic performance or progress into chronic illness. However, across Gulf school systems, two critical bottlenecks exist:
+1. **The Screening Coverage Gap**: Rural or fast-growing school districts often lag behind mandated annual screening schedules due to nurse staffing shortages or private school operator non-compliance.
+2. **The Referral Follow-Up Failure**: Students identified with vision errors, hearing loss, or dental caries frequently drop out of the care pipeline between the initial school screening and the hospital clinic visit due to bureaucratic friction between Ministries of Education (school access) and Ministries of Health (clinical care pathways).
+
+This PoC solves these bottlenecks by providing:
+- **100% Full-Width Main Stage** with real-time screening completion gauges and referral funnels.
+- **Click & Open Intelligence Layer** sliding drawer containing high-level KPIs, "Why This Matters" and "Who Controls the Rail" panels, region filters, threshold sliders, and CSV/JSON exporters.
+- Vision & dental flag-rate comparisons by grade level (Grades 1–12).
+- An interactive school-level ranking and compliance table built with TanStack Table.
+
+---
+
+## 🏗️ Architecture Summary
+
+The project consists of a **FastAPI backend** for data orchestration and a **Next.js frontend** for modern dashboard visualizations.
+
+```mermaid
+graph TD
+    subgraph Frontend [Next.js Client - Port 3002]
+        UI[100% Main Stage Layout] --> Gauges[Regional Completion Gauges]
+        UI --> Funnel[Referral-to-Treatment Funnel]
+        UI --> FlagBars[Vision & Dental Flag Bars]
+        UI --> Table[TanStack School Ranking Table]
+        UI --> IntelLayer[Click & Open Intelligence Layer]
+        IntelLayer --> Exporter[CSV / JSON Exporter]
+    end
+
+    subgraph Backend [FastAPI Server - Port 8082]
+        API[FastAPI Router] --> HealthAdapter[School Health Adapter]
+        HealthAdapter --> RegionalData[Regional Screening Datasets]
+        HealthAdapter --> FunnelData[Referral Funnel Engine]
+        HealthAdapter --> RankEngine[School Ranking Engine]
+    end
+
+    Gauges -->|Fetch Summary| API
+    Table -->|Fetch Rankings| API
+```
+
+### Key Technical Specs:
+1. **Layout Design**: 100% full-width main view with a slide-over Click & Open Intelligence Layer drawer.
+2. **Data Ingestion**: Integrates WHO Health-Promoting Schools framework, UAE MOE school health data paradigms, and Saudi MOH screening reports. Supports transparent local mock fallback.
+3. **Table Engine**: Built with `@tanstack/react-table` for multi-column sorting, global search filtering, and compliance status badge formatting (`Exemplary`, `Target Met`, `Follow-Up Gap`, `Action Required`).
+4. **Analytics Engine**: Powered by Recharts for vertical referral funnels and grade-level flag-rate bar comparisons.
+5. **Visual Identity**: Obsidian Black background (`#030712`), Deep Navy Grey surfaces (`#0B1117`), Electric Cyan active accents (`#38BDF8`), and Indigo secondary accents (`#818CF8`).
+
+---
+
+## 📸 Screenshots
+Screenshots of the running application are saved under the [screenshots/](file:///Users/awaazmuhammed/Documents/SchoolHealthScreening/screenshots) folder.
+- **Main View**: 100% Full-Width Dashboard layout in Obsidian Black showing regional completion gauges and the referral funnel.
+- **Intelligence Layer**: Click & Open slide-over drawer with metrics, governance panels, and exporters.
+- **School Ranking Table**: Interactive TanStack Table with real-time sorting and status badges.
+
+---
+
+## 🤖 AI Usage Summary
+
+- **AI Assistant**: Antigravity (Google DeepMind Advanced Agentic Coding)
+- **Model Used**: Gemini 3.6 Flash
+- **Development Partnership**:
+  - **Planning Mode**: Developed implementation plan outlining full-width layout, FastAPI routes, and TanStack table integration.
+  - **Backend Construction**: Implemented Uvicorn, FastAPI, and Pandas adapters for regional screening summary and referral funnel calculation.
+  - **Frontend Construction**: Built Next.js 14 App Router dashboard with Tailwind CSS v4 colors, Recharts funnel charts, `@tanstack/react-table` school ranking modules, and Click & Open Intelligence Layer drawer.
+
+---
+
+## 🚀 How to Run the Application
+
+Ensure you have **Python 3.9+** and **Node.js 18+** installed.
+
+### 1. Start the FastAPI Backend
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --host 127.0.0.1 --port 8082
+```
+*API Swagger docs available at:* `http://127.0.0.1:8082/docs`
+
+### 2. Start the Next.js Frontend
+```bash
+cd frontend
+npm install
+npm run dev -- -p 3002
+```
+*The Dashboard UI will be available at:* `http://localhost:3002`
+
+---
+
+## 🔮 Future Enhancements
+1. **Live Ministry EMR Integration**: Connect directly to UAE Malaffi / Nabidh and Saudi NPHIES APIs for real-time clinical referral closing verification.
+2. **Parent Notification Automation**: Trigger SMS and WhatsApp follow-up reminders to parents of flagged students.
+3. **Geospatial Mobile Clinics**: Map underserved schools to route mobile dental and optometry screening vans automatically.
+</file>
+
+</files>

@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: schoolhealth-backend-poc40
+    restart: always
+    ports:
+      - "8082:8082"
+    environment:
+      - PORT=8082
+      - HOST=0.0.0.0
+      - ENVIRONMENT=production
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8082/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    networks:
+      - schoolhealth-network
+
+  # Next.js Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: schoolhealth-frontend-poc40
+    restart: always
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - NEXT_PUBLIC_API_BASE=http://localhost:8082/api
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:3002/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    networks:
+      - schoolhealth-network
+
+networks:
+  schoolhealth-network:
+    driver: bridge
