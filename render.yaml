@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: poc40-schoolhealth-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon

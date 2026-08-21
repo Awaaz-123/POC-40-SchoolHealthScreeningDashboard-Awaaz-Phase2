@@ -127,7 +127,7 @@ export default function Home() {
   // Click & Open Intelligence Layer State
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
-  const API_BASE = "http://localhost:8082/api";
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8082/api";
 
   useEffect(() => {
     async function loadDashboardData() {
